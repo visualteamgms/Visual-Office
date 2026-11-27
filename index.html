@@ -906,26 +906,28 @@ const ACT = {
 const PLACE = {garden:'สวนรอบลานกลาง', bench:'ม้านั่งในสวน', lawn:'สนามหญ้าในสวน', river:'ริมลำธาร', tree:'บ้านต้นไม้', camp:'กองไฟในสวน'};
 const LUNCH = {eat: 5, buffet: 2, grill: 2, drink: 1, treat: 1, talk: 2};
 const BRK = {};
-function breaksOf(id){
+/* the whole day is cut into 10–20 minute slots; each slot gets a random activity (work is one of them) */
+function slotsOf(id){
   if (BRK[id]) return BRK[id];
-  const r = k => rr(today, id, k), dur = k => 10 + Math.floor(r(k) * 3) * 5;
-  const pool = {coffee: 3, snack: 1, walk: 3, sit: 2, stretch: 2, fish: id === 'puff' || id === 'bill' ? 4 : 1.5, chat: 1};
-  if (id === 'boo') pool.climb = 12;
-  const B = [{a: 600 + Math.floor(r('m') * 10) * 10, d: dur('md'), act: pickW(pool, today, id, 'am')}, {a: 840 + Math.floor(r('a') * 6) * 10, d: dur('ad'), act: pickW(pool, today, id, 'pm')}];
-  if (r('b') < .75) B.push({a: 960 + Math.floor(r('b2') * 8) * 10, d: dur('bd'), act: pickW(pool, today, id, 'pm2')});
+  const pool = {work: 4, coffee: 2, snack: 1, walk: 3, sit: 2, stretch: 1.5, fish: id === 'puff' || id === 'bill' ? 3 : 1.5, chat: 1.5};
+  if (id === 'boo') pool.climb = 3;
+  const S = []; let t = 0, k = 0, prev = '';
+  while (t < 1440){
+    const d = 10 + Math.floor(rr(today, id, 'd', k) * 3) * 5; let act = pickW(pool, today, id, 's', k);
+    if (act === prev) act = pickW(pool, today, id, 's2', k);
+    S.push({a: t, d, act}); prev = act; t += d; k++;
+  }
   const G = 870 + Math.floor(rr(today, 'g') * 9) * 10, gs = MEMBERS.map(x => x.id).sort((a, b) => rr(today, 'gm', a) - rr(today, 'gm', b)).slice(0, rr(today, 'gn') < .5 ? 3 : 4);
-  if (gs.includes(id)){ B[1] = {a: G, d: 15, act: rr(today, 'gk') < .5 ? 'chat' : 'coffee'}; if (B[2] && B[2].a < G + 30) B.pop(); }
-  if (id === 'boo' && !B.some(x => x.act === 'climb')) B[0].act = 'climb';
-  return BRK[id] = B;
+  if (gs.includes(id)) S.push({a: G, d: 15, act: rr(today, 'gk') < .5 ? 'chat' : 'coffee', grp: 1});
+  return BRK[id] = S;
 }
 function whereNow(m){
   const s = stOf(m.id); if (s === 'leave' || s === 'out') return {room: null, why: s === 'leave' ? 'ลาวันนี้' : 'ออกนอกสถานที่'};
-  const t = nowMin(), p = slotNow(m.id);
+  const t = nowMin(), p = slotNow(m.id), S = slotsOf(m.id);
   if (t >= 720 && t < 780){ const act = pickW(LUNCH, today, m.id, 'L', (t - 720) / 10 | 0), A = ACT[act]; return {room: 'canteen', act, ic: A.ic, pose: A.pose, why: `พักกลางวัน · ${A.t}`}; }
-  if (t >= 540 && t < 1080){
-    const b = breaksOf(m.id).find(b => t >= b.a && t < b.a + b.d);
-    if (b && !(p && /ประชุม|meeting|บรีฟ|brief/i.test(String(p.w || '')))){ const A = ACT[b.act]; return {room: A.loc, act: b.act, ic: A.ic, pose: A.pose, why: `${A.t} ${fm(b.a)}–${fm(b.a + b.d)}`}; }
-  }
+  const b = S.find(x => x.grp && t >= x.a && t < x.a + x.d) || S.find(x => !x.grp && t >= x.a && t < x.a + x.d);
+  const meeting = p && /ประชุม|meeting|บรีฟ|brief/i.test(String(p.w || ''));
+  if (b && b.act !== 'work' && !meeting){ const A = ACT[b.act]; return {room: A.loc, act: b.act, ic: A.ic, pose: A.pose, why: `${A.t} ${fm(b.a)}–${fm(Math.min(1440, b.a + b.d))}`}; }
   if (p){ const w = String(p.w || ''), r = RULES.find(([re]) => re.test(w)); return {room: r ? r[1] : m.room, why: `${p.t} ${w}`}; }
   return {room: m.room, why: t < 540 || t >= 1080 ? 'นอกเวลางาน' : 'ห้องประจำ'};
 }
