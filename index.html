@@ -1092,8 +1092,8 @@ function overlay(){
     const a = id === 'cafe' ? iso(i0 + 2.5, j0, FZ + 40) : id === 'qc' ? iso(i0 + 3.6, j0, FZ + WH + 6) : iso(i0 + .3, j0 + .3, FZ + WH + 10);
     h += `<button class="rtag" data-room="${id}" style="left:${a[0]}px;top:${a[1]}px;--c:${r.c}"><i></i>${esc(r.name)}</button>`;
   }
-  FIG.filter(f => f.a && !f.path).forEach(f => { h += `<button class="who npc" data-room="${f.a.room}" style="left:${f.x - 10}px;top:${f.y - 30}px;--s:${f.a.c}" aria-label="${esc(f.a.n)}"><span class="ntag"><i></i>${f.ic ? f.ic + ' ' : ''}${esc(f.a.n)}</span></button>`; });
-  FIG.filter(f => f.m && !f.path).forEach(f => { const st = ST[stOf(f.m.id)]; h += `<button class="who" data-m="${f.m.id}" style="left:${f.x - 10}px;top:${f.y - 20}px;--s:${st.c}" aria-label="${esc(f.m.nick)} ${esc(st.t)}"><span class="ntag"><i></i>${f.ic ? f.ic + ' ' : ''}${esc(f.m.nick)}</span></button>`; });
+  FIG.filter(f => f.a && !f.path).forEach(f => { h += `<button class="who npc" data-room="${f.a.room}" style="left:${f.x - 10}px;top:${f.y - 30}px;--s:${f.a.c}" aria-label="${esc(f.a.n)}"><span class="ntag"><i></i>${esc(f.a.n)}</span></button>`; });
+  FIG.filter(f => f.m && !f.path).forEach(f => { const st = ST[stOf(f.m.id)]; h += `<button class="who" data-m="${f.m.id}" style="left:${f.x - 10}px;top:${f.y - 20}px;--s:${st.c}" aria-label="${esc(f.m.nick)} ${esc(st.t)}"><span class="ntag"><i></i>${esc(f.m.nick)}</span></button>`; });
   { const a = iso(CT[0] + 3.9, CT[1], CZ + 46), r = ROOMS.find(q => q.id === 'canteen'); h += `<button class="rtag" data-room="canteen" style="left:${a[0]}px;top:${a[1]}px;--c:${r.c}"><i></i>${esc(r.name)}</button>`; }
   ov.innerHTML = h;
 }
