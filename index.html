@@ -316,7 +316,7 @@ const CAT = ['.k....k.....', 'kwk..kgk....', 'kwwkkggkkkk.', 'kwwwwwgwwwwk', 'kw
 const LEAF = ['....gg...', '...gGGg..', '..gGGGGg.', '.gGGGGGg.', '.gGGdGGg.', '.gGGdGg..', '..gGdg...', '...gd....', '....d....', '....d....', '....d....'];
 function human(m, x, y, blink, pose){
   const L = m.L; let r = HB.slice();
-  const sit = pose === 'sit' || pose === 'sitEat' || pose === 'chatSit';
+  const sit = SITS.has(pose);
   if (sit){ r = [...r.slice(0, 13), '.kppppppppk.', '.kkkkkkkkkk.']; y += 2; }
   if (L.hair === 'spiky'){ r[0] = '..kk.kk.kk..'; r[1] = '.khhkhhkhhk.'; }
   if (L.hair === 'long'){ r[4] = 'khhsssssshhk'; r[5] = 'khssessesshk'; r[6] = 'khsbssssbshk'; r[7] = 'khksssssskhk'; r[8] = 'khkcccccckhk'; }
@@ -348,6 +348,20 @@ function poseFX(pose, x, y, sh, id){
     case 'climb': armUp(t & 1, 1); break;
     case 'fish': { const b = t % 4 === 0 ? 1 : 0; line(x + 2, y + 9, x - 9, y + 1, '#6b4a2e'); line(x - 9, y + 1, x - 11, y + 13 + b, '#e9eeeb'); P(x - 12, y + 13 + b, 2, 2, '#e4523b'); P(x - 12, y + 13 + b, 2, 1, '#ffffff'); if (t % 13 === 0){ P(x - 16, y + 12, 3, 1, '#ffffff'); P(x - 15, y + 10, 2, 2, '#ff9a3c'); } break; }
     case 'chat': case 'chatSit': bubble(); break;
+    case 'pet': P(x + 9, y + 11, 3, 1, SK); if (t % 5 < 2){ P(x + 12, y + 1 - (t % 5), 1, 1, '#ff6b9a'); P(x + 14, y + 1 - (t % 5), 1, 1, '#ff6b9a'); P(x + 12, y + 2 - (t % 5), 3, 1, '#ff6b9a'); P(x + 13, y + 3 - (t % 5), 1, 1, '#ff6b9a'); } break;
+    case 'feed': P(x + 10, y + 8, 3, 1, sh); P(x + 13, y + 8, 1, 1, SK); for (let k = 0; k < 3; k++) P(x + 14 + k * 2 - (t % 2), y + 10 + ((t + k) % 4), 1, 1, '#c9915a'); break;
+    case 'water': P(x + 9, y + 9, 4, 3, '#4fa8a0'); line(x + 13, y + 10, x + 16, y + 8, '#4fa8a0'); for (let k = 0; k < 3; k++) P(x + 16 + (k & 1), y + 9 + ((t + k * 2) % 6), 1, 1, '#8fd3ff'); break;
+    case 'bend': P(x + 9, y + 12, 1, 3, '#2f9c68'); P(x + 8, y + 10, 3, 2, ['#ff9ac4', '#ffd95a', '#b7a6ff'][t % 3]); break;
+    case 'camera': P(x + 3, y + 5, 6, 4, '#2b3530'); P(x + 5, y + 6, 2, 2, '#8fd3ff'); if (t % 9 === 0){ P(x + 1, y + 2, 10, 1, '#ffffff'); P(x + 5, y, 2, 6, '#ffffff'); } break;
+    case 'selfie': armUp(1, 1); P(x + 10, y - 3, 3, 4, '#2b3530'); P(x + 11, y - 2, 1, 2, '#8fd3ff'); if (t % 7 === 0) P(x + 9, y - 5, 5, 1, '#ffffff'); break;
+    case 'readSit': P(x + 3, y + 8, 6, 4, '#c0562f'); P(x + 5, y + 8, 2, 4, '#ffffff'); P(x + 6, y + 8, 1, 4, '#e9e2c2'); break;
+    case 'yoga': P(x - 1, y + 9, 2, 1, sh); P(x + 11, y + 9, 2, 1, sh); P(x - 2, y + 8, 1, 1, SK); P(x + 13, y + 8, 1, 1, SK); if (t % 4 < 2) P(x + 5, y - 3, 2, 1, '#fff3b0'); break;
+    case 'ball': { const by = t % 4 < 2 ? 0 : -3; P(x + 10, y + 13 + by, 3, 3, '#ffffff'); P(x + 11, y + 14 + by, 1, 1, K); P(x + 10, y + 13 + by, 1, 1, '#cfd8d3'); break; }
+    case 'kite': { const kx = x + 24 + (t % 3), ky = y - 34 + (t & 1); line(x + 10, y + 8, kx, ky + 6, 'rgba(255,255,255,.8)'); P(kx - 1, ky, 3, 1, '#e4523b'); P(kx - 2, ky + 1, 5, 2, '#ffd95a'); P(kx - 1, ky + 3, 3, 2, '#e4523b'); P(kx, ky + 5, 1, 1, '#e4523b'); for (let k = 0; k < 4; k++) P(kx + ((k + t) & 1), ky + 6 + k * 2, 1, 1, k & 1 ? '#55c58a' : '#8fd3ff'); break; }
+    case 'guitarSit': P(x + 2, y + 9, 5, 3, '#b07a45'); P(x + 3, y + 10, 2, 1, '#5a3a22'); line(x + 7, y + 10, x + 13, y + 7, '#6b4a2e'); if (t % 4 < 2){ P(x + 13, y - 1 - (t % 4), 1, 3, K); P(x + 14, y - 1 - (t % 4), 2, 1, K); P(x + 12, y + 1 - (t % 4), 2, 1, K); } break;
+    case 'musicSit': P(x + 1, y + 4, 1, 3, '#e4523b'); P(x + 10, y + 4, 1, 3, '#e4523b'); P(x + 2, y, 8, 1, '#2b2b2b'); if (t % 4 < 2){ P(x + 13, y - 1 - (t % 4), 1, 3, '#7b6cd9'); P(x + 12, y + 1 - (t % 4), 2, 1, '#7b6cd9'); } break;
+    case 'nap': { const z = t % 6; P(x + 11 + z, y - 1 - z, 3, 1, '#ffffff'); P(x + 12 + z, y - z, 1, 1, '#ffffff'); P(x + 11 + z, y + 1 - z, 3, 1, '#ffffff'); break; }
+    case 'net': line(x + 9, y + 9, x + 14, y - 1, '#6b4a2e'); ell(x + 15, y - 3, 3, 2, 'rgba(255,255,255,.7)'); P(x + 18 + (t % 3), y - 6 - (t & 1), 2, 1, '#ffd95a'); P(x + 19 + (t % 3), y - 7 + (t & 1), 1, 1, '#ff9ac4'); break;
   }
 }
 const KIT = {
@@ -588,6 +602,7 @@ function zone(i, j){
   if (j > 37.3 && j < 41 && i > -.4) return 0;
   if (i > 19.3 && i < 28.6 && j > 31.9 && j < 37.4) return 0;
   if (j > 36.4 && j <= 37.4 && i > 9 && i < 34) return 0;
+  if (i > 28.6 && i < 32.8 && j > 32 && j < 36.4) return 0;
   if (i > -.6 && i < 8.9 && j > 34.6 && j < 44.6) return 0;
   if (i > 16.4 && i < 20.2 && j >= 41) return 0;
   for (const t of TOWERS) if (inR(i, j, t, .7)) return 0;
@@ -860,7 +875,7 @@ function buildWorld(){
   S(65.5, () => treehouse(35, 28.5));
   canteen();
   for (let k = 0; k < 150; k++){ const i = -2 + rn() * 39, j = -3 + rn() * 39, z = zone(i, j), p = iso(i, j).map(Math.round); if (z !== 1 && z !== 4) continue; S(i + j + 1, () => { P(p[0], p[1] - 3, 1, 3, '#2f7d55'); P(p[0] - 1, p[1] - 5, 3, 2, ['#ffd0e2', '#fff3b0', '#ffffff', '#b7a6ff'][k % 4]); P(p[0], p[1] - 5, 1, 1, '#ffd95a'); }); }
-  for (const [i, j] of [[23.6, 33.4], [15.4, 25.3], [30.5, 25.2], [9.2, 21.4], [26.5, 9.5]]) S(i + j + 1, () => { const p = iso(i, j).map(Math.round); spr(['.w.w..', '.w.w..', 'wwww..', 'wewwww', 'wwwwww', '.w..w.'], p[0] - 3, p[1] - 6, {w: '#f6f1e6', e: '#333333'}); });
+  for (const [i, j] of [[29.8, 36.7], [15.4, 25.3], [30.5, 25.2], [9.2, 21.4], [26.5, 9.5]]) S(i + j + 1, () => { const p = iso(i, j).map(Math.round); spr(['.w.w..', '.w.w..', 'wwww..', 'wewwww', 'wwwwww', '.w..w.'], p[0] - 3, p[1] - 6, {w: '#f6f1e6', e: '#333333'}); });
   const rail = i => { for (const j of [37.8, 38.75, 39.7, 40.6]){ const p = iso(i, j, 5); P(p[0] - 1, p[1] - 11, 2, 11, '#6b4a2e'); } il(iso(i, 37.8, 15), iso(i, 40.6, 15), '#6b4a2e'); il(iso(i, 37.8, 16), iso(i, 40.6, 16), '#8a5a34'); il(iso(i, 37.8, 11), iso(i, 40.6, 11), '#8a5a34'); };
   S(56.4, () => rail(17.2)); S(60.9, () => rail(19.3));
   const ff = []; for (let k = 0; k < 70; k++) ff.push([rn() * CW | 0, 40 + rn() * (CH - 60) | 0]);
@@ -904,13 +919,33 @@ const ACT = {
   treat: {t:'กินขนม', ic:'🍪', loc:'canteen', pose:'eat'}, talk: {t:'ยืนคุยกัน', ic:'💬', loc:'canteen', pose:'chat'}
 };
 const PLACE = {garden:'สวนรอบลานกลาง', bench:'ม้านั่งในสวน', lawn:'สนามหญ้าในสวน', river:'ริมลำธาร', tree:'บ้านต้นไม้', camp:'กองไฟในสวน'};
+Object.assign(ACT, {
+  cat: {t:'เล่นกับแมว', ic:'🐱', loc:'cat', pose:'pet'}, bunny: {t:'ลูบกระต่าย', ic:'🐰', loc:'bunny', pose:'pet'},
+  feedfish: {t:'ให้อาหารปลาที่บ่อ', ic:'🐟', loc:'pond', pose:'feed'}, water: {t:'รดน้ำต้นไม้', ic:'🌷', loc:'flower', pose:'water'},
+  flower: {t:'เก็บดอกไม้', ic:'💐', loc:'flower', pose:'bend'}, photo: {t:'ถ่ายรูปวิวน้ำตก', ic:'📸', loc:'view', pose:'camera'},
+  selfie: {t:'ถ่ายเซลฟี่หน้าน้ำตก', ic:'🤳', loc:'view', pose:'selfie'}, tea: {t:'จิบชาชมวิว', ic:'🍵', loc:'view', pose:'cup'},
+  bridge: {t:'นั่งห้อยขาบนสะพาน', ic:'🌉', loc:'bridge', pose:'sit'}, read: {t:'อ่านหนังสือใต้ต้นไม้', ic:'📖', loc:'shade', pose:'readSit'},
+  nap: {t:'งีบใต้ต้นไม้', ic:'💤', loc:'shade', pose:'nap'}, yoga: {t:'นั่งสมาธิ', ic:'🧘', loc:'lawn', pose:'yoga'},
+  ball: {t:'เตะบอลเล่น', ic:'⚽', loc:'field', pose:'ball'}, kite: {t:'เล่นว่าว', ic:'🪁', loc:'field', pose:'kite'},
+  guitar: {t:'เล่นกีตาร์รอบกองไฟ', ic:'🎸', loc:'camp', pose:'guitarSit'}, music: {t:'ฟังเพลงชิล ๆ', ic:'🎧', loc:'bench', pose:'musicSit'},
+  jog: {t:'วิ่งรอบลาน', ic:'🏃', loc:'garden', pose:null, run:1}, butterfly: {t:'ไล่จับผีเสื้อ', ic:'🦋', loc:'garden', pose:'net'},
+  serve: {t:'ตักอาหารให้ทีม', ic:'👨‍🍳', loc:'canteen', pose:'grill'}
+});
+Object.assign(PLACE, {cat:'ข้างลานกลาง (แมว)', bunny:'สนามหญ้า (กระต่าย)', pond:'ริมบ่อปลา', flower:'แปลงดอกไม้', view:'จุดชมวิวน้ำตก', bridge:'สะพานไม้', shade:'ใต้ต้นไม้ใหญ่', field:'สนามหญ้าโล่ง'});
+const SITS = new Set(['sit', 'sitEat', 'chatSit', 'readSit', 'yoga', 'guitarSit', 'musicSit', 'nap']);
+function poolOf(id, ai){
+  const p = {work: ai ? 3 : 2.5, coffee: 1.5, walk: 2, jog: 1, sit: 1.2, stretch: 1, fish: 1, chat: 1, cat: 1, bunny: 1, feedfish: 1, water: 1, flower: 1, photo: 1, tea: 1, bridge: 1, read: 1, nap: .6, yoga: 1, ball: 1, kite: 1, guitar: .7, music: 1, butterfly: 1};
+  if (!ai){ p.snack = 1; p.selfie = 1; }
+  if (id === 'puff' || id === 'bill') p.fish = 3;
+  if (id === 'boo') p.climb = 3;
+  return p;
+}
 const LUNCH = {eat: 5, buffet: 2, grill: 2, drink: 1, treat: 1, talk: 2};
 const BRK = {};
 /* the whole day is cut into 10–20 minute slots; each slot gets a random activity (work is one of them) */
 function slotsOf(id){
   if (BRK[id]) return BRK[id];
-  const pool = {work: 4, coffee: 2, snack: 1, walk: 3, sit: 2, stretch: 1.5, fish: id === 'puff' || id === 'bill' ? 3 : 1.5, chat: 1.5};
-  if (id === 'boo') pool.climb = 3;
+  const pool = poolOf(id, id.startsWith('ag:'));
   const S = []; let t = 0, k = 0, prev = '';
   while (t < 1440){
     const d = 10 + Math.floor(rr(today, id, 'd', k) * 3) * 5; let act = pickW(pool, today, id, 's', k);
@@ -918,8 +953,15 @@ function slotsOf(id){
     S.push({a: t, d, act}); prev = act; t += d; k++;
   }
   const G = 870 + Math.floor(rr(today, 'g') * 9) * 10, gs = MEMBERS.map(x => x.id).sort((a, b) => rr(today, 'gm', a) - rr(today, 'gm', b)).slice(0, rr(today, 'gn') < .5 ? 3 : 4);
-  if (gs.includes(id)) S.push({a: G, d: 15, act: rr(today, 'gk') < .5 ? 'chat' : 'coffee', grp: 1});
+  if (!id.startsWith('ag:') && gs.includes(id)) S.push({a: G, d: 15, act: rr(today, 'gk') < .5 ? 'chat' : 'coffee', grp: 1});
   return BRK[id] = S;
+}
+function whereNowA(a){
+  const id = 'ag:' + a.en, t = nowMin();
+  if (a.room === 'cafe' && t >= 720 && t < 780){ const A = ACT.serve; return {room: 'canteen', act: 'serve', ic: A.ic, pose: A.pose, why: 'พักกลางวัน · ' + A.t}; }
+  const b = slotsOf(id).find(x => t >= x.a && t < x.a + x.d);
+  if (b && b.act !== 'work'){ const A = ACT[b.act]; return {room: A.loc, act: b.act, ic: A.ic, pose: A.pose, run: A.run, why: `${A.t} ${fm(b.a)}–${fm(Math.min(1440, b.a + b.d))}`}; }
+  return {room: a.room, why: 'ประจำห้อง'};
 }
 function whereNow(m){
   const s = stOf(m.id); if (s === 'leave' || s === 'out') return {room: null, why: s === 'leave' ? 'ลาวันนี้' : 'ออกนอกสถานที่'};
@@ -927,7 +969,7 @@ function whereNow(m){
   if (t >= 720 && t < 780){ const act = pickW(LUNCH, today, m.id, 'L', (t - 720) / 10 | 0), A = ACT[act]; return {room: 'canteen', act, ic: A.ic, pose: A.pose, why: `พักกลางวัน · ${A.t}`}; }
   const b = S.find(x => x.grp && t >= x.a && t < x.a + x.d) || S.find(x => !x.grp && t >= x.a && t < x.a + x.d);
   const meeting = p && /ประชุม|meeting|บรีฟ|brief/i.test(String(p.w || ''));
-  if (b && b.act !== 'work' && !meeting){ const A = ACT[b.act]; return {room: A.loc, act: b.act, ic: A.ic, pose: A.pose, why: `${A.t} ${fm(b.a)}–${fm(Math.min(1440, b.a + b.d))}`}; }
+  if (b && b.act !== 'work' && !meeting){ const A = ACT[b.act]; return {room: A.loc, act: b.act, ic: A.ic, pose: A.pose, run: A.run, why: `${A.t} ${fm(b.a)}–${fm(Math.min(1440, b.a + b.d))}`}; }
   if (p){ const w = String(p.w || ''), r = RULES.find(([re]) => re.test(w)); return {room: r ? r[1] : m.room, why: `${p.t} ${w}`}; }
   return {room: m.room, why: t < 540 || t >= 1080 ? 'นอกเวลางาน' : 'ห้องประจำ'};
 }
@@ -945,41 +987,49 @@ const LSPOT = {
   tree: [[36.05, 29.55, 33], [35.1, 29.85, 33]],
   camp: [[12.75, 23.25, 4], [12.75, 24.1, 4], [13.75, 24.85, 4], [14.6, 24.85, 4]]
 };
+Object.assign(LSPOT, {
+  cat: [[20.5, 20.1], [21.8, 21.1], [20.6, 21.3]], bunny: [[16.1, 25.8], [31.2, 25.8], [9.9, 22.0], [30.4, 37.0]],
+  pond: [[8.3, 36.6], [10.4, 36.95], [9.3, 36.7]], flower: [[12.6, 18.6], [23.9, 17.0], [11.6, 19.6], [13.7, 13.2], [22.5, 12.7]],
+  view: [[35.4, 36.95], [36.5, 37.0], [34.3, 36.95]], bridge: [[17.75, 38.7, 5], [18.85, 39.6, 5], [17.75, 39.9, 5]],
+  shade: [[33.5, 30.7], [32.7, 30.0], [34.6, 31.2]], field: [[29.6, 33.2], [31.4, 33.6], [30.2, 35.2], [31.8, 35.4]]
+});
+LSPOT.canteen.serve = [CS(3.4, .08)];
 const RING = (() => { const out = []; for (let k = 0; k < 12; k++){ const a = k / 12 * 6.2832, u = .5 + 3.9 * Math.cos(a), v = 35.5 + 4.1 * Math.sin(a); out.push([(u + v) / 2, (v - u) / 2]); } return out; })();
 const ROUTE = {qc: [GOAL.qc], web: [GOAL.web], ad: [GOAL.ad], brief: [[29.5, 22.6], GOAL.brief], ref: [GOAL.ref], photo: [GOAL.photo], retouch: [GOAL.retouch], cafe: [GOAL.cafe],
-  canteen: [[18.25, 22.5], [18.25, 35.1], [19.9, 35.2]], river: [[18.25, 22.5], [18.25, 36.95]], tree: [[30.6, 25.2], [37.15, 29.0, 0], [36.6, 28.95, 30]], garden: [], bench: [], lawn: [], camp: [[15.8, 22.4]]};
+  canteen: [[18.25, 22.5], [18.25, 35.1], [19.9, 35.2]], river: [[18.25, 22.5], [18.25, 36.95]], tree: [[30.6, 25.2], [37.15, 29.0, 0], [36.6, 28.95, 30]], garden: [], bench: [], lawn: [], camp: [[15.8, 22.4]],
+  cat: [], bunny: [], flower: [], field: [[30.6, 25.2], [31, 32]], pond: [[18.25, 22.5], [18.25, 36.95], [11, 36.95]], view: [[18.25, 22.5], [18.25, 36.95]], bridge: [[18.25, 22.5], [18.25, 37.4]], shade: [[30.6, 25.2]]};
 const wp = q => ptOf(q[0], q[1], q[2] || 0);
+const MOVERS = () => [...MEMBERS.map(m => ({id: m.id, m})), ...AGENTS.map(a => ({id: 'ag:' + a.en, a}))];
+const LOWZ = {bench: 1, camp: 1, bridge: 1};
+const spotK = (L, k, loc) => { const sp = L[k % L.length], r = Math.floor(k / L.length); if (!r) return sp; const g = r * 2.1 + k * 1.3; return [sp[0] + Math.cos(g) * .6 * r, sp[1] + Math.sin(g) * .6 * r, LOWZ[loc] ? 0 : sp[2]]; };
 function layout(animate){
   const byRoom = {}, outs = {}; for (const id in RM) byRoom[id] = [];
-  MEMBERS.forEach(m => { const w = whereNow(m); WHERE[m.id] = w; if (!w.room) return; if (RM[w.room]) byRoom[w.room].push(m); else (outs[w.room] = outs[w.room] || []).push(m); });
+  const MV = MOVERS();
+  MV.forEach(v => { const w = v.m ? whereNow(v.m) : whereNowA(v.a); WHERE[v.id] = w; if (!w.room) return; if (RM[w.room]) byRoom[w.room].push(v); else (outs[w.room] = outs[w.room] || []).push(v); });
   FA = []; const tgt = {};
-  for (const id in RM){
-    const [i0, j0, w, h] = RM[id], spots = [...SPOT[id], ...SPOTX(w, h)], ms = byRoom[id], ag = AGENTS.filter(a => a.room === id);
-    ms.forEach((m, k) => { const [di, dj] = spots[k % spots.length]; tgt[m.id] = [i0 + di, j0 + dj, FZ]; });
-    ag.slice(0, Math.max(0, spots.length - ms.length)).forEach((a, k) => { const [di, dj] = spots[ms.length + k], p = ptOf(i0 + di, j0 + dj, FZ); FA.push({a, x: p[0], y: p[1]}); });
-  }
+  for (const id in RM){ const [i0, j0, w, h] = RM[id], spots = [...SPOT[id], ...SPOTX(w, h)]; byRoom[id].forEach((v, k) => { const [di, dj] = spotK(spots, k, id); tgt[v.id] = [i0 + di, j0 + dj, FZ]; }); }
   for (const loc in outs){
     const ms = outs[loc];
     if (loc === 'canteen'){
       const used = {}, take = act => { const L = LSPOT.canteen[act], k = used[act] = (used[act] || 0) + 1; return k <= L.length ? L[k - 1] : null; };
-      ms.forEach(m => { const w = WHERE[m.id]; let sp = take(w.act);
-        if (!sp){ w.act = 'eat'; sp = take('eat'); } if (!sp){ w.act = 'talk'; sp = take('talk') || CS(3.5, 4.4, CZ); }
-        const A = ACT[w.act]; w.ic = A.ic; w.pose = A.pose; w.why = `พักกลางวัน · ${A.t}`; tgt[m.id] = sp; });
+      ms.forEach(v => { const w = WHERE[v.id]; let sp = take(w.act);
+        if (!sp && v.m){ w.act = 'eat'; sp = take('eat'); } if (!sp){ w.act = 'talk'; sp = take('talk') || CS(3.5, 4.4, CZ); }
+        const A = ACT[w.act]; w.ic = A.ic; w.pose = A.pose; w.why = `พักกลางวัน · ${A.t}`; tgt[v.id] = sp; });
     } else if (loc === 'garden'){
-      ms.forEach(m => { const f = FM[m.id], ri = f && f.room === 'garden' && f.ri !== undefined ? f.ri : hsh(m.id + today) % RING.length; WHERE[m.id].ri = ri; tgt[m.id] = RING[ri]; });
-    } else ms.forEach((m, k) => { const L = LSPOT[loc], sp = L[k % L.length]; tgt[m.id] = k < L.length ? sp : [sp[0] + .5, sp[1] + .4, sp[2]]; });
+      ms.forEach(v => { const f = FM[v.id], ri = f && f.room === 'garden' && f.ri !== undefined ? f.ri : hsh(v.id + today) % RING.length; WHERE[v.id].ri = ri; tgt[v.id] = RING[ri]; });
+    } else ms.forEach((v, k) => { tgt[v.id] = spotK(LSPOT[loc], k, loc); });
   }
-  MEMBERS.forEach(m => {
-    const w = WHERE[m.id], f = FM[m.id];
+  MV.forEach(v => {
+    const w = WHERE[v.id], f = FM[v.id];
     if (!w.room){ if (f) f.gone = true; return; }
-    const end = wp(tgt[m.id]), key = w.room, base = {m, room: key, act: w.act, pose: w.pose, ic: w.ic, ri: w.ri, ex: end[0], ey: end[1]};
-    if (!f || f.gone || !animate){ FM[m.id] = {...base, x: end[0], y: end[1], path: null}; return; }
+    const end = wp(tgt[v.id]), key = w.room, base = {m: v.m, a: v.a, id: v.id, room: key, act: w.act, pose: w.pose, ic: w.ic, ri: w.ri, run: w.run, ex: end[0], ey: end[1]};
+    if (!f || f.gone || !animate){ FM[v.id] = {...base, x: end[0], y: end[1], path: null}; return; }
     if (f.room === key){
       if (f.ex === end[0] && f.ey === end[1]){ Object.assign(f, base); return; }
-      FM[m.id] = {...base, x: f.x, y: f.y, step: f.step, path: [...(f.path ? [] : []), end]}; return;
+      FM[v.id] = {...base, x: f.x, y: f.y, step: f.step, path: [end]}; return;
     }
     const pts = [...[...(ROUTE[f.room] || [])].reverse().map(wp), ptOf(PLZ[0], PLZ[1]), ...(ROUTE[key] || []).map(wp), end];
-    FM[m.id] = {...base, x: f.x, y: f.y, step: f.step, path: pts};
+    FM[v.id] = {...base, x: f.x, y: f.y, step: f.step, path: pts};
   });
   syncFig();
   if (Object.values(FM).some(f => f.path) && !walkT) walkT = setInterval(walkStep, 70);
@@ -988,16 +1038,24 @@ function layout(animate){
 }
 function wander(){
   let any = 0;
-  Object.values(FM).forEach(f => { if (f.gone || f.path || f.act !== 'walk' || Math.random() > .35) return;
-    f.ri = (f.ri + (Math.random() < .5 ? 1 : RING.length - 1)) % RING.length; if (WHERE[f.m.id]) WHERE[f.m.id].ri = f.ri;
-    const e = wp(RING[f.ri]); f.ex = e[0]; f.ey = e[1]; f.path = [e]; any = 1; });
+  Object.values(FM).forEach(f => {
+    if (f.gone || f.path) return;
+    if (f.act === 'walk' || f.act === 'jog' || f.act === 'butterfly'){
+      if (Math.random() > (f.act === 'jog' ? .9 : .4)) return;
+      f.ri = (f.ri + (f.act === 'jog' ? 1 : Math.random() < .5 ? 1 : RING.length - 1)) % RING.length; if (WHERE[f.id]) WHERE[f.id].ri = f.ri;
+      const e = wp(RING[f.ri]); f.ex = e[0]; f.ey = e[1]; f.path = [e]; any = 1;
+    } else if (!f.act && RM[f.room] && Math.random() < .08){
+      const [i0, j0, w, h] = RM[f.room], sp = [...SPOT[f.room], ...SPOTX(w, h)][Math.random() * (SPOT[f.room].length + 8) | 0], e = ptOf(i0 + sp[0], j0 + sp[1], FZ);
+      f.path = [e]; any = 1;
+    }
+  });
   if (any && !walkT){ syncFig(); walkT = setInterval(walkStep, 70); }
 }
 function syncFig(){ FIG = [...Object.values(FM).filter(f => !f.gone), ...FA].sort((a, b) => a.y - b.y); }
 function walkStep(){
   let moving = 0;
   Object.values(FM).forEach(f => {
-    if (!f.path) return; let left = 5;
+    if (!f.path) return; let left = f.run ? 9 : 5;
     while (left > 0 && f.path.length){ const [px, py] = f.path[0], dx = px - f.x, dy = py - f.y, d = Math.hypot(dx, dy); if (d <= left){ f.x = px; f.y = py; f.path.shift(); left -= d; } else { f.x += dx / d * left; f.y += dy / d * left; left = 0; } }
     f.step = (f.step || 0) + 1; if (f.path.length) moving++; else f.path = null;
   });
@@ -1015,8 +1073,8 @@ function frame(){
   DYN.forEach(f => f(tick));
   FIG.forEach((f, i) => {
     P(Math.round(f.x) - 5, Math.round(f.y) - 1, 10, 2, 'rgba(0,0,0,.22)'); P(Math.round(f.x) - 3, Math.round(f.y) + 1, 6, 1, 'rgba(0,0,0,.22)');
-    if (f.a){ npc(f.a, f.x - 6, f.y - 16 - ((tick + i * 5) % 16 === 0 ? 1 : 0), (tick + i * 3) % 9 === 0); const my = f.y - 27 - (((tick + i) & 3) < 2 ? 0 : 1); P(f.x - 1, my - 1, 2, 6, K); P(f.x - 3, my + 1, 6, 2, K); P(f.x - 2, my, 4, 4, K); P(f.x - 1, my, 2, 4, f.a.c); P(f.x - 2, my + 1, 4, 2, f.a.c); P(f.x - 1, my + 1, 1, 1, '#ffffff'); }
-    else { const wx = Math.round(f.x), wy = Math.round(f.y) - (f.path && (f.step >> 1) & 1 ? 1 : 0), pose = f.path ? (f.act === 'climb' && f.path.length <= 2 ? 'climb' : null) : f.pose; human(f.m, wx - 6, wy - 16, (tick + i * 3) % 10 === 0, pose); }
+    if (f.a){ const pz = f.path ? null : f.pose, sit = SITS.has(pz) ? 2 : 0, by = f.path ? ((f.step >> 1) & 1) : ((tick + i * 5) % 16 === 0 ? 1 : 0); npc(f.a, Math.round(f.x) - 6, Math.round(f.y) - 16 - by + sit, (tick + i * 3) % 9 === 0 || pz === 'nap'); if (pz) poseFX(pz, Math.round(f.x) - 6, Math.round(f.y) - 16 + sit, f.a.c, f.a.en); const my = f.y - 27 - (((tick + i) & 3) < 2 ? 0 : 1); P(f.x - 1, my - 1, 2, 6, K); P(f.x - 3, my + 1, 6, 2, K); P(f.x - 2, my, 4, 4, K); P(f.x - 1, my, 2, 4, f.a.c); P(f.x - 2, my + 1, 4, 2, f.a.c); P(f.x - 1, my + 1, 1, 1, '#ffffff'); }
+    else { const wx = Math.round(f.x), wy = Math.round(f.y) - (f.path && (f.step >> 1) & 1 ? 1 : 0), pose = f.path ? (f.act === 'climb' && f.path.length <= 2 ? 'climb' : null) : f.pose; human(f.m, wx - 6, wy - 16, (tick + i * 3) % 10 === 0 || pose === 'nap', pose); }
   });
 }
 function setTod(){ NIGHT = todMode === 'auto' ? autoNight() : todMode === 'night'; $('vp').classList.toggle('night', NIGHT); $('tod').textContent = NIGHT ? '☀' : '☾'; $('tod').setAttribute('aria-label', NIGHT ? 'ดูโหมดกลางวัน' : 'ดูโหมดกลางคืน'); frame(); }
@@ -1034,7 +1092,7 @@ function overlay(){
     const a = id === 'cafe' ? iso(i0 + 2.5, j0, FZ + 40) : id === 'qc' ? iso(i0 + 3.6, j0, FZ + WH + 6) : iso(i0 + .3, j0 + .3, FZ + WH + 10);
     h += `<button class="rtag" data-room="${id}" style="left:${a[0]}px;top:${a[1]}px;--c:${r.c}"><i></i>${esc(r.name)}</button>`;
   }
-  FIG.filter(f => f.a).forEach(f => { h += `<button class="who npc" data-room="${f.a.room}" style="left:${f.x - 10}px;top:${f.y - 30}px;--s:${f.a.c}" aria-label="${esc(f.a.n)}"><span class="ntag"><i></i>${esc(f.a.n)}</span></button>`; });
+  FIG.filter(f => f.a && !f.path).forEach(f => { h += `<button class="who npc" data-room="${f.a.room}" style="left:${f.x - 10}px;top:${f.y - 30}px;--s:${f.a.c}" aria-label="${esc(f.a.n)}"><span class="ntag"><i></i>${f.ic ? f.ic + ' ' : ''}${esc(f.a.n)}</span></button>`; });
   FIG.filter(f => f.m && !f.path).forEach(f => { const st = ST[stOf(f.m.id)]; h += `<button class="who" data-m="${f.m.id}" style="left:${f.x - 10}px;top:${f.y - 20}px;--s:${st.c}" aria-label="${esc(f.m.nick)} ${esc(st.t)}"><span class="ntag"><i></i>${f.ic ? f.ic + ' ' : ''}${esc(f.m.nick)}</span></button>`; });
   { const a = iso(CT[0] + 3.9, CT[1], CZ + 46), r = ROOMS.find(q => q.id === 'canteen'); h += `<button class="rtag" data-room="canteen" style="left:${a[0]}px;top:${a[1]}px;--c:${r.c}"><i></i>${esc(r.name)}</button>`; }
   ov.innerHTML = h;
