@@ -52,6 +52,7 @@ img.px{image-rendering:pixelated;flex:none}
 .vp.far .ntag{font-size:9.5px;padding:0 4px;gap:3px}.vp.far .ntag i{width:6px;height:6px}
 .vp.xfar .ntag{font-size:8px;padding:0 3px}.vp.xfar .npc{display:none}
 .vp.vfar .rtag{font-size:10px;padding:0 6px;gap:4px;border-width:1px;border-radius:7px}.vp.vfar .rtag i{width:6px;height:6px}
+.strip.idea{pointer-events:auto;text-decoration:none;color:inherit;font:500 14px/1.4 Mitr,sans-serif;cursor:pointer;gap:6px;align-items:center}.strip.idea small{font:400 12px 'IBM Plex Sans Thai',sans-serif;opacity:.75}.strip.idea:hover{filter:brightness(1.05)}
 .hud{position:absolute;left:10px;top:10px;right:10px;display:flex;flex-wrap:wrap;gap:8px;pointer-events:none;z-index:2}
 .stage.wide .hud{right:320px}
 .strip{background:var(--paper);border:2px solid var(--edge);border-radius:999px;box-shadow:0 2px 0 var(--edge);padding:3px 14px 3px 4px;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center}
@@ -156,6 +157,7 @@ a.btn{text-decoration:none;display:inline-flex;align-items:center}
     <header class="hud">
       <div class="strip"><img class="px" id="logo" alt="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><h1>Visual Team · AI Agent Office</h1></div>
       <div class="strip res"><span class="lab">ผลงาน 1–25 พ.ย. 2026</span><span><b>58</b>หน้าเว็บ</span><span><b>41</b>ถ่ายงาน</span><span><b>150</b>AD</span><span><b>5</b>อื่น ๆ</span></div>
+      <a class="strip idea" href="https://padlet.com/itsarab/padlet-s025ufydt8jbx3q1ontv" target="_blank" rel="noopener">💡 กระดานไอเดีย <small>อยากให้ออฟฟิศมีอะไรเพิ่ม พิมพ์บอกได้เลย</small></a>
     </header>
     <div class="zoom"><button id="zin" aria-label="ซูมเข้า">+</button><button id="zout" aria-label="ซูมออก">−</button><button id="zall" aria-label="ดูวิวทั้งหมด">⤢</button><button id="zfit" aria-label="กลับมุมมองเริ่มต้น">◎</button><button id="tod" aria-label="ดูโหมดกลางคืน">☾</button></div>
   </div>
@@ -193,6 +195,7 @@ a.btn{text-decoration:none;display:inline-flex;align-items:center}
     <a class="card" href="https://docs.google.com/spreadsheets/d/1pRhyblaek8lu4cPJfu1iB_YGiPvmLxu-9UCYplCdFMw"><b>ชีต KPI ทีมวิชวล</b><span>1 แท็บต่อคน · เกณฑ์ผ่าน 0.80</span></a>
     <a class="card" href="https://claude.ai/artifact/RKRCrtv4SLTD6fKiJD9P7e"><b>ส่ง Daily Task</b><span>ฟอร์มส่งรูปงานประจำวัน · เปิดใน Claude</span></a>
     <a class="card" href="https://claude.ai/artifact/LZ29edFAq6ANVSS1J9eP6D"><b>KPI จากรูป Daily Task</b><span>สรุป KPI รายเดือน · เปิดใน Claude</span></a>
+    <a class="card" href="https://padlet.com/itsarab/padlet-s025ufydt8jbx3q1ontv" target="_blank" rel="noopener"><b>💡 กระดานไอเดีย</b><span>อยากให้ออฟฟิศมีอะไรเพิ่ม พิมพ์บอกได้เลย ไม่ต้องสมัคร</span></a>
     <a class="card fb" id="fbCard" href="#" target="_blank" rel="noopener"><b>ข้อเสนอแนะ / ขอความช่วยเหลือ</b><span>ปรับปรุงออฟฟิศ · แจ้งปัญหา · ขอให้ช่วย</span></a>
   </div>
 </div></section>
@@ -603,6 +606,7 @@ function zone(i, j){
   if (i > 19.3 && i < 28.6 && j > 31.9 && j < 37.4) return 0;
   if (j > 36.4 && j <= 37.4 && i > 9 && i < 34) return 0;
   if (i > 28.6 && i < 32.8 && j > 32 && j < 36.4) return 0;
+  if (i > 12.2 && i < 14.4 && j > 16.8 && j < 19.8) return 0;
   if (i > -.6 && i < 8.9 && j > 34.6 && j < 44.6) return 0;
   if (i > 16.4 && i < 20.2 && j >= 41) return 0;
   for (const t of TOWERS) if (inR(i, j, t, .7)) return 0;
@@ -874,6 +878,10 @@ function buildWorld(){
   DYN.push(t => { P(fp[0] - 2, fp[1] - 6 - (t & 1), 4, 5, '#ff9a3c'); P(fp[0] - 1, fp[1] - 8 - (t % 3), 2, 5, '#ffd95a'); P(fp[0] + (t & 1 ? 2 : -3), fp[1] - 4, 1, 2, '#ff9a3c'); for (let k = 0; k < 3; k++) P(fp[0] + ((t + k) % 3) - 1, fp[1] - 13 - ((t * 2 + k * 5) % 14), 1, 1, 'rgba(255,255,255,.55)'); });
   S(65.5, () => treehouse(35, 28.5));
   canteen();
+  S(13.3 + 18.3 + .5, () => { const pz = (i, j) => { const p = iso(i, j).map(Math.round); P(p[0] - 1, p[1] - 22, 2, 22, '#6b4a2e'); P(p[0] - 1, p[1] - 22, 1, 22, '#8a5a34'); }; pz(13.3, 17.6); pz(13.3, 19.0);
+    fI(13.3, 17.45, 19.15, 8, 22, '#8a5a34'); fI(13.3, 17.55, 19.05, 9, 21, '#d9b07a');
+    [['#fff3b0', 17.7, 17], ['#ffd0e2', 18.15, 18], ['#c9f0d9', 18.6, 16.5], ['#cfefff', 17.8, 12], ['#ffffff', 18.35, 12.5]].forEach(([c, j, z]) => { fI(13.3, j, j + .32, z, z + 3.5, c); const p = iso(13.3, j + .16, z + 3.5).map(Math.round); P(p[0], p[1], 1, 1, '#e4523b'); });
+    fillPoly([iso(13.3, 17.3, 22), iso(13.3, 19.3, 22), iso(13.3, 18.3, 27)], '#c8461f'); });
   for (let k = 0; k < 150; k++){ const i = -2 + rn() * 39, j = -3 + rn() * 39, z = zone(i, j), p = iso(i, j).map(Math.round); if (z !== 1 && z !== 4) continue; S(i + j + 1, () => { P(p[0], p[1] - 3, 1, 3, '#2f7d55'); P(p[0] - 1, p[1] - 5, 3, 2, ['#ffd0e2', '#fff3b0', '#ffffff', '#b7a6ff'][k % 4]); P(p[0], p[1] - 5, 1, 1, '#ffd95a'); }); }
   for (const [i, j] of [[29.8, 36.7], [15.4, 25.3], [30.5, 25.2], [9.2, 21.4], [26.5, 9.5]]) S(i + j + 1, () => { const p = iso(i, j).map(Math.round); spr(['.w.w..', '.w.w..', 'wwww..', 'wewwww', 'wwwwww', '.w..w.'], p[0] - 3, p[1] - 6, {w: '#f6f1e6', e: '#333333'}); });
   const rail = i => { for (const j of [37.8, 38.75, 39.7, 40.6]){ const p = iso(i, j, 5); P(p[0] - 1, p[1] - 11, 2, 11, '#6b4a2e'); } il(iso(i, 37.8, 15), iso(i, 40.6, 15), '#6b4a2e'); il(iso(i, 37.8, 16), iso(i, 40.6, 16), '#8a5a34'); il(iso(i, 37.8, 11), iso(i, 40.6, 11), '#8a5a34'); };
@@ -989,7 +997,7 @@ const LSPOT = {
 };
 Object.assign(LSPOT, {
   cat: [[20.5, 20.1], [21.8, 21.1], [20.6, 21.3]], bunny: [[16.1, 25.8], [31.2, 25.8], [9.9, 22.0], [30.4, 37.0]],
-  pond: [[8.3, 36.6], [10.4, 36.95], [9.3, 36.7]], flower: [[12.6, 18.6], [23.9, 17.0], [11.6, 19.6], [13.7, 13.2], [22.5, 12.7]],
+  pond: [[8.3, 36.6], [10.4, 36.95], [9.3, 36.7]], flower: [[12.6, 18.6], [23.9, 17.0], [11.4, 20.4], [13.7, 13.2], [22.5, 12.7]],
   view: [[35.4, 36.95], [36.5, 37.0], [34.3, 36.95]], bridge: [[17.75, 38.7, 5], [18.85, 39.6, 5], [17.75, 39.9, 5]],
   shade: [[33.5, 30.7], [32.7, 30.0], [34.6, 31.2]], field: [[29.6, 33.2], [31.4, 33.6], [30.2, 35.2], [31.8, 35.4]]
 });
@@ -1095,6 +1103,7 @@ function overlay(){
   FIG.filter(f => f.a && !f.path).forEach(f => { h += `<button class="who npc" data-room="${f.a.room}" style="left:${f.x - 10}px;top:${f.y - 30}px;--s:${f.a.c}" aria-label="${esc(f.a.n)}"><span class="ntag"><i></i>${esc(f.a.n)}</span></button>`; });
   FIG.filter(f => f.m && !f.path).forEach(f => { const st = ST[stOf(f.m.id)]; h += `<button class="who" data-m="${f.m.id}" style="left:${f.x - 10}px;top:${f.y - 20}px;--s:${st.c}" aria-label="${esc(f.m.nick)} ${esc(st.t)}"><span class="ntag"><i></i>${esc(f.m.nick)}</span></button>`; });
   { const a = iso(CT[0] + 3.9, CT[1], CZ + 46), r = ROOMS.find(q => q.id === 'canteen'); h += `<button class="rtag" data-room="canteen" style="left:${a[0]}px;top:${a[1]}px;--c:${r.c}"><i></i>${esc(r.name)}</button>`; }
+  { const a = iso(13.3, 18.3, 30); h += `<a class="rtag" href="https://padlet.com/itsarab/padlet-s025ufydt8jbx3q1ontv" target="_blank" rel="noopener" style="left:${a[0]}px;top:${a[1]}px;--c:#ffd95a;text-decoration:none"><i></i>💡 กระดานไอเดีย</a>`; }
   ov.innerHTML = h;
 }
 function initWorld(){
