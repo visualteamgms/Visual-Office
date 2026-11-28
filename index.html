@@ -31,7 +31,7 @@ img.px{image-rendering:pixelated;flex:none}
 .mapbox{position:relative}
 .vp{position:relative;overflow:hidden;height:62vh;min-height:360px;background:#2f6b47;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
 .vp.drag{cursor:grabbing}
-.vp{background:#8fd3ee}.vp.night{background:#121b46}
+.vp{background:#6a4fa8}.vp.night{background:#120a33}
 .vp:focus-visible{outline:3px solid var(--lamp);outline-offset:-3px}
 .stage.wide .vp{height:min(84vh,780px)}
 .world{position:absolute;left:0;top:0;width:1760px;height:1080px;transform-origin:0 0}
@@ -92,7 +92,7 @@ img.px{image-rendering:pixelated;flex:none}
 .pill::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--s)}
 .trow{display:grid;grid-template-columns:24px auto 1fr;gap:0 8px;align-items:center;width:100%;text-align:left;background:var(--row);border:0;border-radius:8px;padding:3px 8px;margin-top:4px;min-height:40px}
 .trow:hover,.trow:focus-visible{filter:brightness(1.06);outline:2px solid var(--edge)}
-.trow img{width:24px;height:32px;grid-row:span 2}
+.trow img{width:24px;height:40px;grid-row:span 2}
 .trow b{font:500 15px Mitr}
 .trow .pill{justify-self:end}
 .trow small{grid-column:2/4;font-size:12px;color:var(--mute);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -102,7 +102,7 @@ img.px{image-rendering:pixelated;flex:none}
 .day summary{display:flex;gap:10px;align-items:center;justify-content:space-between;cursor:pointer;padding:10px 14px;min-height:44px}
 .day summary b{font:500 17px Mitr}
 .lrow{display:grid;grid-template-columns:18px 82px minmax(0,1fr);gap:8px;align-items:center;padding:5px 14px;border-top:1px solid var(--line);font-size:14px}
-.lrow img{width:18px;height:24px}.lrow b{font:500 14px Mitr}.lrow.miss span{color:var(--mute)}
+.lrow img{width:18px;height:30px}.lrow b{font:500 14px Mitr}.lrow.miss span{color:var(--mute)}
 .eve{border-top:2px dashed var(--line);margin-top:4px}.evh{display:flex;gap:8px;align-items:center;padding:8px 14px 4px;font:500 14px Mitr}.lrow i{font-style:normal;font-size:12px;border-radius:6px;padding:0 6px;margin-right:2px;color:#fff}.lrow i.ok{background:#2f9c68}.lrow i.no{background:#d9643a}.lrow i.uk{background:#8a8f8c}
 .plan{list-style:none;padding:0;margin:6px 0 12px}
 .plan li{display:flex;gap:10px;padding:3px 8px;background:var(--row);border-radius:6px;margin-top:3px;font-size:14px}
@@ -238,23 +238,23 @@ const MEMBERS = [
 ];
 
 const ROOMS = [
-  {id:'ref', name:'ห้องหา Ref & เทรนด์', c:'#7fd1a8', wall:['#e3f7ea','#c6ecd6'], kind:'board', steps:['1 รับบรีฟ','2 วางตัวอย่างหน้าเว็บ'],
+  {id:'ref', name:'หอสมุดคัมภีร์ · Ref & เทรนด์', c:'#7fd1a8', wall:['#e3f7ea','#c6ecd6'], kind:'board', steps:['1 รับบรีฟ','2 วางตัวอย่างหน้าเว็บ'],
    d:'เก็บ Ref จากเว็บแบรนด์ (แคป Section), Huaban/Pinterest (KV, Hero) และ Behance (CGI) แล้วทำหน้าให้หัวหน้าคลิกเลือก', who:['best']},
-  {id:'brief', name:'ห้องบรีฟ & ประชุม', c:'#a6e3c4', wall:['#eef9f1','#d7efe0'], kind:'table', steps:['1 รับบรีฟ — ข้อมูลสินค้า, Mood & Tone'],
+  {id:'brief', name:'ห้องโถงสภา · บรีฟ & ประชุม', c:'#a6e3c4', wall:['#eef9f1','#d7efe0'], kind:'table', steps:['1 รับบรีฟ — ข้อมูลสินค้า, Mood & Tone'],
    d:'รับสินค้าใหม่จาก GMS "All New Product" เช็คว่าข้อมูลสินค้าครบ แจกงานตามแบรนด์ประจำ ส่วนแบรนด์ไม่มีคนประจำหัวหน้าแจกตามคิว', who:['best']},
-  {id:'cafe', name:'คาเฟ่ & ลาวน์จ', c:'#ffcf5a', wall:['#fbf3dc','#f0e2b8'], kind:'cafe', steps:['พักผ่อน · คุยงาน'],
+  {id:'cafe', name:'ร้านน้ำชาเวทมนตร์ & ลาวน์จ', c:'#ffcf5a', wall:['#fbf3dc','#f0e2b8'], kind:'cafe', steps:['พักผ่อน · คุยงาน'],
    d:'มุมพักของทีม ผู้ช่วย AI ประจำมุมนี้คอยเตือนส่ง Daily Task และสรุปความเคลื่อนไหวของทีม', who:[]},
-  {id:'canteen', name:'โรงอาหาร & บุฟเฟ่ต์', c:'#ff9a3c', wall:['#fff1e0','#f6dcc0'], kind:'canteen', steps:['พักกลางวัน 12:00–13:00 ทุกคนมารวมกันที่นี่','บุฟเฟ่ต์ · ย่างเนื้อ · กดน้ำ · ขนม'],
+  {id:'canteen', name:'ห้องโถงใหญ่ · บุฟเฟ่ต์', c:'#ff9a3c', wall:['#fff1e0','#f6dcc0'], kind:'canteen', steps:['พักกลางวัน 12:00–13:00 ทุกคนมารวมกันที่นี่','บุฟเฟ่ต์ · ย่างเนื้อ · กดน้ำ · ขนม'],
    d:'ลานกินข้าวกลางสวนริมลำธาร เที่ยงตรงทุกคนเดินมากินด้วยกัน', who:[]},
-  {id:'photo', name:'สตูดิโอถ่ายภาพ', c:'#8fc7ff', wall:['#eef4f1','#dbe7e0'], kind:'studio', steps:['3 ถ่ายรูปสินค้า','7 ถ่ายแก้'],
+  {id:'photo', name:'ห้องลูกแก้ว · สตูดิโอถ่ายภาพ', c:'#8fc7ff', wall:['#eef4f1','#dbe7e0'], kind:'studio', steps:['3 ถ่ายรูปสินค้า','7 ถ่ายแก้'],
    d:'ถ่ายสินค้าตามตัวอย่างหน้าเว็บที่วางไว้ รวมถึงงานถ่ายนอกสถานที่', who:['puff','bill','tham','boss']},
-  {id:'web', name:'ห้องหน้าเว็บ & ใบสเปค', c:'#5fd0b0', wall:['#e0f5ee','#c3eadc'], kind:'web', wide:1, steps:['2 วางตัวอย่างหน้าเว็บ','5 ทำภาพขึ้นเว็บ','6 ทำ Visual และใบสเปค'],
+  {id:'web', name:'ห้องร่ายมนตร์ · หน้าเว็บ & สเปค', c:'#5fd0b0', wall:['#e0f5ee','#c3eadc'], kind:'web', wide:1, steps:['2 วางตัวอย่างหน้าเว็บ','5 ทำภาพขึ้นเว็บ','6 ทำ Visual และใบสเปค'],
    d:'ทำภาพหน้าเว็บและใบสเปค ปรับขนาดตามแพลตฟอร์ม แบรนด์มากสุดคือ GLINK', who:['tham','achi','noey','p','boss']},
-  {id:'retouch', name:'ห้องไดคัท & รีทัช', c:'#b7a6ff', wall:['#eceaf9','#d9d5f2'], kind:'retouch', steps:['4 ไดคัท รีทัช ลบฝุ่น','5 ทำ PNG'],
+  {id:'retouch', name:'ห้องปรุงยา · ไดคัท & รีทัช', c:'#b7a6ff', wall:['#eceaf9','#d9d5f2'], kind:'retouch', steps:['4 ไดคัท รีทัช ลบฝุ่น','5 ทำ PNG'],
    d:'ไดคัท รีทัช ลบฝุ่น ทำ PNG พร้อมขึ้นเว็บ แล้วย้ายการ์ดไป Final PNG', who:['puff','bill']},
-  {id:'ad', name:'ห้อง AD & Motion', c:'#ff9a8a', wall:['#fbece8','#f3d6cf'], kind:'ad', steps:['6 ปรับขนาดตามแพลตฟอร์ม'],
+  {id:'ad', name:'หอคอยภาพเคลื่อนไหว · AD & Motion', c:'#ff9a8a', wall:['#fbece8','#f3d6cf'], kind:'ad', steps:['6 ปรับขนาดตามแพลตฟอร์ม'],
    d:'AD Facebook, AD Commart (Brochure, AD Spec), AD Dealer Support และภาพเคลื่อนไหว', who:['boo','boss','tham']},
-  {id:'qc', name:'ศูนย์ควบคุมคุณภาพ & ระบบ', c:'#ffcf5a', wall:['#163f31','#0f3a2c'], kind:'command', dark:1, steps:['7 ส่งตรวจ / แก้ไข','8 อัปโหลดไฟล์ลงระบบ'],
+  {id:'qc', name:'หอคอยอาจารย์ใหญ่ · QC & ระบบ', c:'#ffcf5a', wall:['#163f31','#0f3a2c'], kind:'command', dark:1, steps:['7 ส่งตรวจ / แก้ไข','8 อัปโหลดไฟล์ลงระบบ'],
    d:'ตรวจงานก่อนส่ง ย้ายการ์ด VISUAL → Final WEB และ GMS → Final พร้อมขึ้น WEB | SEO สรุป KPI และ Report รายเดือนตัดรอบวันที่ 25', who:['best']}
 ];
 
@@ -326,8 +326,11 @@ function human(m, x, y, blink, pose){
   if (L.hair === 'cap'){ r[1] = '..kaaaaaak..'; r[2] = '.kaaaaaaaak.'; r[3] = '.kaaaaaaaaak'; }
   if (L.glasses) r[5] = '.ksGeGGeGsk.';
   if (blink) r[5] = r[5].replace(/e/g, 'm');
-  spr(r, x, y, {k: K, h: L.hair === 'cap' ? '#2b2b2b' : L.hc, a: L.hc, s: '#ffd9b8', m: '#c98a68', e: '#1b1b1b', b: '#ff9aa8', c: L.shirt, d: tone(L.shirt, .72), p: '#3b4a5a', G: '#7fd0ff'});
-  if (L.hair !== 'cap' && L.hair !== 'spiky') P(x + 3, y + 2, 2, 1, tone(L.hc, 1.7));
+  r[0] = '..kBBBBBBk..'; r[1] = 'kHHHHHHHHHHk'; r[2] = '.kkhhhhhhkk.'; if (L.hair === 'cap' || L.hair === 'spiky') r[3] = '.khhhhhhhhk.';
+  r[8] = '..kRccccRk..'; r[9] = '.kRRccccRRk.'; r[10] = '.ksRRccRRsk.'; r[11] = '.kRRRccRRRk.';
+  if (sit){ r[12] = '.kRRRRRRRRk.'; r[13] = 'kRRRRRRRRRRk'; r[14] = 'kkkkkkkkkkkk'; } else { r[12] = '.kRRRRRRRRk.'; r[13] = 'kRRRRRRRRRRk'; r[14] = 'kccccccccccK'.replace('K', 'k'); r[15] = 'kkkkkkkkkkkk'; }
+  const pal = {k: K, h: L.hair === 'cap' ? '#2b2b2b' : L.hc, a: L.hc, s: '#ffd9b8', m: '#c98a68', e: '#1b1b1b', b: '#ff9aa8', c: L.shirt, d: tone(L.shirt, .72), p: '#3b4a5a', G: '#7fd0ff', R: tone(L.shirt, .5), H: tone(L.shirt, .38), B: L.shirt};
+  spr(['.....kk.....', '....kHHk....', '...kHHHHk...', '...kHHHHk...'], x, y - 4, pal); spr(r, x, y, pal); P(x + 6, y - 2, 1, 1, '#ffd95a'); P(x + 5, y - 3, 1, 1, '#fff3b0');
   const a = L.acc;
   if (a === 'camera'){ P(x + 4, y + 9, 4, 3, '#2b3530'); P(x + 5, y + 10, 2, 1, '#8fd3ff'); }
   if (a === 'tablet'){ P(x + 4, y + 9, 4, 3, '#2b3530'); P(x + 5, y + 10, 2, 1, '#8fe0b5'); }
@@ -364,6 +367,12 @@ function poseFX(pose, x, y, sh, id){
     case 'guitarSit': P(x + 2, y + 9, 5, 3, '#b07a45'); P(x + 3, y + 10, 2, 1, '#5a3a22'); line(x + 7, y + 10, x + 13, y + 7, '#6b4a2e'); if (t % 4 < 2){ P(x + 13, y - 1 - (t % 4), 1, 3, K); P(x + 14, y - 1 - (t % 4), 2, 1, K); P(x + 12, y + 1 - (t % 4), 2, 1, K); } break;
     case 'musicSit': P(x + 1, y + 4, 1, 3, '#e4523b'); P(x + 10, y + 4, 1, 3, '#e4523b'); P(x + 2, y, 8, 1, '#2b2b2b'); if (t % 4 < 2){ P(x + 13, y - 1 - (t % 4), 1, 3, '#7b6cd9'); P(x + 12, y + 1 - (t % 4), 2, 1, '#7b6cd9'); } break;
     case 'nap': { const z = t % 6; P(x + 11 + z, y - 1 - z, 3, 1, '#ffffff'); P(x + 12 + z, y - z, 1, 1, '#ffffff'); P(x + 11 + z, y + 1 - z, 3, 1, '#ffffff'); break; }
+    case 'potion': { const cx = x + 15, cy = y + 13; line(x + 9, y + 9, cx + 1, cy - 4 + (t & 1), '#6b4a2e'); ell(cx, cy + 1, 6, 4, '#1b1b22'); ell(cx, cy - 2, 5, 1, ['#7cff8a', '#b78cff', '#ff8ad0'][((t / 6) | 0) % 3]); P(cx - 4, cy + 4, 2, 2, '#1b1b22'); P(cx + 3, cy + 4, 2, 2, '#1b1b22'); if (t & 1) P(cx - 2, cy + 6, 4, 1, '#ff9a3c');
+      for (let k = 0; k < 3; k++){ const q = (t * 2 + k * 5) % 14; P(cx - 2 + k * 2 + (q >> 2 & 1), cy - 4 - q, 1 + (q < 5 ? 1 : 0), 1 + (q < 5 ? 1 : 0), q < 8 ? 'rgba(160,255,190,.9)' : 'rgba(255,255,255,.6)'); } break; }
+    case 'tome': P(x + 1, y + 9, 10, 4, '#5a2f7a'); P(x + 2, y + 9, 4, 3, '#f6ecd0'); P(x + 6, y + 9, 4, 3, '#efe2c0'); P(x + 6, y + 9, 1, 3, '#c9b78a'); for (let k = 0; k < 3; k++){ const q = (t + k * 3) % 9; P(x + 3 + k * 3, y + 7 - q, 1, 1, ['#b7a6ff', '#ffd95a', '#8eeaf0'][k]); } break;
+    case 'owl': { armUp(1, 2); const a = t * .5, ox = x + 18 + Math.round(Math.sin(a) * 8), oy = y - 12 + Math.round(Math.cos(a * 2) * 3), fl = t & 1;
+      P(ox - 2, oy, 5, 5, '#8a6a4a'); P(ox - 1, oy + 1, 1, 1, '#ffd95a'); P(ox + 1, oy + 1, 1, 1, '#ffd95a'); P(ox, oy + 2, 1, 1, '#e9a820'); P(ox - 1, oy + 3, 3, 2, '#d9c4a0'); P(ox - 4, oy + (fl ? 0 : 2), 2, 3, '#6b4a2e'); P(ox + 3, oy + (fl ? 0 : 2), 2, 3, '#6b4a2e'); P(ox - 1, oy + 5, 3, 2, '#fff8e1'); P(ox, oy + 5, 1, 1, '#c0562f'); break; }
+    case 'chess': { P(x + 10, y + 10, 9, 5, '#3a2a20'); for (let a = 0; a < 4; a++) for (let b = 0; b < 2; b++) P(x + 11 + a * 2, y + 11 + b * 2, 2, 2, (a + b) & 1 ? '#f3ead6' : '#5a3f8c'); const hop = (t % 6) < 2 ? 2 : 0; P(x + 11 + (t % 4) * 2, y + 8 - hop, 1, 3, '#ffffff'); P(x + 17 - (t % 3) * 2, y + 8, 1, 3, '#1b1b22'); P(x + 16, y + 7, 2, 1, '#1b1b22'); if (hop) P(x + 12 + (t % 4) * 2, y + 5, 1, 1, '#ffd95a'); break; }
     case 'net': line(x + 9, y + 9, x + 14, y - 1, '#6b4a2e'); ell(x + 15, y - 3, 3, 2, 'rgba(255,255,255,.7)'); P(x + 18 + (t % 3), y - 6 - (t & 1), 2, 1, '#ffd95a'); P(x + 19 + (t % 3), y - 7 + (t & 1), 1, 1, '#ff9ac4'); break;
   }
 }
@@ -384,7 +393,7 @@ const KIT = {
 };
 const SKIN = ['#ffd9b8', '#f3c7a0', '#d9a37a'];
 function npc(a, x, y, blink){
-  const k = KIT[a.en] || {}, r = HB.slice(), up = [], hc = k.hc || a.c, c = k.c || a.c;
+  const k0 = KIT[a.en] || {}, k = {...k0, hat: 'wizard', body: 'robe', item: 'wand', hc: tone(k0.c || a.c, .62), hb: tone(k0.c || a.c, .42)}, r = HB.slice(), up = [], hc = k.hc || a.c, c = k.c || a.c;
   if (k.long){ r[4] = 'khhsssssshhk'; r[5] = 'khssessesshk'; r[6] = 'khsbssssbshk'; r[7] = 'khksssssskhk'; r[8] = 'khkcccccckhk'; }
   if (k.glasses) r[5] = k.long ? 'khsGeGGeGshk' : '.ksGeGGeGsk.';
   switch (k.hat){
@@ -431,7 +440,7 @@ function sprURL(key, w, h, draw){
   const c = document.createElement('canvas'); c.width = w; c.height = h; const old = g; g = c.getContext('2d'); draw(); g = old;
   return URLS[key] = c.toDataURL();
 }
-const mURL = m => sprURL('m' + m.id, 12, 16, () => human(m, 0, 0, false));
+const mURL = m => sprURL('m' + m.id, 12, 20, () => human(m, 0, 4, false));
 const aURL = a => sprURL('a' + a.en, 12, 20, () => npc(a, 0, 4, false));
 const stOf = id => ST[(STATE.status[id]||{}).s] ? (STATE.status[id]||{}).s : 'none';
 
@@ -494,7 +503,7 @@ const BACK = [{x:150,y:225,rx:100,t:[[0,0,4,160]]}, {x:372,y:138,rx:86,t:[[0,0,3
 const FRONT = [{x:140,y:830,rx:104,t:[[0,0,4,120]],fall:1}, {x:345,y:985,rx:84,t:[[0,0,3,90]]}, {x:1560,y:800,rx:110,t:[[-1.6,0,3,130],[1.8,.2,3,80]],fall:1}, {x:1385,y:985,rx:80,t:[[0,0,3,100]]}];
 function sideIsland(o, k0){
   const {x, y, rx} = o, ry = Math.round(rx / 2), tr = ([tx, ty, r1, r2]) => r1 < .5 ? pine(tx, ty, .7 + r2 * .5, TP[(r2 * 3) | 0]) : oak(tx, ty, .6 + r2 * .4, TP[(r1 * 3) | 0]);
-  cloudB(x - rx * .5 | 0, y + rx * 1.1 | 0, 1.1, '#ffffff', '#dcecf2'); cloudB(x + rx * .4 | 0, y + rx * 1.25 | 0, .9, '#ffffff', '#dcecf2');
+  cloudB(x - rx * .5 | 0, y + rx * 1.1 | 0, 1.1, '#fff1f6', '#ead8f2'); cloudB(x + rx * .4 | 0, y + rx * 1.25 | 0, .9, '#fff1f6', '#ead8f2');
   rockUnder(X => { const d = (X - x) / rx; return Math.abs(d) <= 1 ? y + ry * Math.sqrt(1 - d * d) : undefined; }, x - rx, x + rx, rx * 1.25, x);
   ell(x, y, rx, ry, '#63b84f'); for (let k = 0; k < rx; k++){ const a = rn() * 6.283, q = rn() * .9; P(x + Math.cos(a) * rx * q, y + Math.sin(a) * ry * q, 2, 1, k % 3 ? '#449a42' : '#aee272'); }
   const pre = [], post = [];
@@ -518,12 +527,13 @@ const CUM = [[250, 250, 1.9], [760, 150, 1.3], [1130, 250, 2.2], [1540, 330, 1.5
 function sky(night){
   sd = 77;
   if (!night){
-    grad(['#2f86e0', '#56aaf0', '#8fd3f2', '#c9efef', '#f3faea'], 20);
-    ell(1560, 96, 74, 74, 'rgba(255,244,190,.16)'); ell(1560, 96, 58, 58, 'rgba(255,244,190,.28)'); ell(1560, 96, 44, 44, '#fff6c2'); ell(1560, 96, 34, 34, '#fffdf0');
-    for (let k = 0; k < 10; k++) cloudB(rn() * CW | 0, 60 + rn() * 820 | 0, .6 + rn(), '#ffffff', '#dbeaf8');
-    CUM.forEach(([x, y, sc]) => cumulus(x, y, sc, ['#ffffff', '#e3eefb', '#b7d0f0']));
+    grad(['#2c2266', '#5a3f98', '#9a6cbc', '#e39bb4', '#ffd6a0'], 20);
+    ell(1560, 96, 74, 74, 'rgba(255,244,190,.16)'); ell(1560, 96, 58, 58, 'rgba(255,244,190,.28)'); ell(1560, 96, 44, 44, '#ffe0a8'); ell(1560, 96, 34, 34, '#fff4d6');
+    for (let k = 0; k < 10; k++) cloudB(rn() * CW | 0, 60 + rn() * 820 | 0, .6 + rn(), '#fff1f6', '#e6cdea');
+    CUM.forEach(([x, y, sc]) => cumulus(x, y, sc, ['#fff3f7', '#f1d9ec', '#c9a6d6']));
   } else {
-    grad(['#060a26', '#0c1a45', '#123462', '#1a4f73', '#256a7c'], 20);
+    grad(['#07041c', '#140a3d', '#24135c', '#2c2470', '#33357a'], 20);
+    for (let b = 0; b < 3; b++){ const by = 150 + b * 70, cc = ['rgba(120,255,190,.10)', 'rgba(170,120,255,.10)', 'rgba(255,140,220,.08)'][b]; for (let x = 0; x < CW; x += 4){ const y = by + Math.sin(x * .004 + b * 1.7) * 60 + Math.sin(x * .011 + b) * 18; P(x, y, 4, 70 - b * 12, cc); P(x, y + 10, 4, 30, cc); } }
     for (let k = 0; k < 560; k++){ const x = rn() * CW | 0, y = rn() * CH | 0; P(x, y, 1, 1, ['#ffffff', '#cfe0ff', '#fff3b0'][k % 3]); if (k % 17 === 0){ P(x - 1, y, 3, 1, '#cfe0ff'); P(x, y - 1, 1, 3, '#cfe0ff'); } }
     ell(1560, 96, 70, 70, 'rgba(244,241,216,.07)'); ell(1560, 96, 52, 52, 'rgba(244,241,216,.12)'); ell(1560, 96, 34, 34, '#f4f1d8'); ell(1548, 86, 7, 7, '#dcd8b8'); ell(1572, 106, 5, 5, '#dcd8b8'); ell(1566, 84, 3, 3, '#dcd8b8');
     CUM.forEach(([x, y, sc]) => cumulus(x, y, sc, ['#34447f', '#28366c', '#1b2655']));
@@ -548,7 +558,7 @@ function rainbow(c){
 }
 function buildNight(day){
   const c = document.createElement('canvas'); c.width = CW; c.height = CH; const x = c.getContext('2d');
-  x.drawImage(day, 0, 0); x.globalCompositeOperation = 'source-atop'; x.fillStyle = 'rgba(7,22,60,.6)'; x.fillRect(0, 0, CW, CH); x.globalCompositeOperation = 'source-over';
+  x.drawImage(day, 0, 0); x.globalCompositeOperation = 'source-atop'; x.fillStyle = 'rgba(22,10,62,.6)'; x.fillRect(0, 0, CW, CH); x.globalCompositeOperation = 'source-over';
   const keep = DYN, old = g; DYN = []; REC = false; g = x;
   for (const id in RM){ const [a, b, w, h] = RM[id]; quad(a + .2, b + .2, w - .4, h - .4, 'rgba(255,214,130,.24)', FZ); }
   WINS.forEach(([p, t], k) => { if (t === 2) fillPoly(p, '#ffd95a'); else if ((k * 7919) % 100 < 50) fillPoly(p, k % 3 ? '#ffe08a' : '#fff3b0'); });
@@ -576,7 +586,7 @@ for (const id in GOAL){ const pts = id === 'brief' ? [PLZ, [29.5, 22.6], GOAL[id
 const dseg = (i, j, [a, b]) => { const vx = b[0] - a[0], vy = b[1] - a[1], t = Math.max(0, Math.min(1, ((i - a[0]) * vx + (j - a[1]) * vy) / (vx * vx + vy * vy))); return Math.hypot(i - a[0] - vx * t, j - a[1] - vy * t); };
 const inR = (i, j, r, m = 0) => i > r[0] - m && i < r[0] + r[2] + m && j > r[1] - m && j < r[1] + r[3] + m;
 const inPlaza = (i, j, m = 1) => { const du = ((i - j) - .5) * 16 / (84 * m), dv = ((i + j) - 35.5) * 8 / (44 * m); return du * du + dv * dv < 1; };
-const FL = {qc:['#1f4d3c','#1a4032'], ref:['#d9b98a','#c4a274'], photo:['#b9c4bd','#a7b3ab'], retouch:['#c9c0e6','#b6abd8'], web:['#dcc096','#c7a97c'], ad:['#e6cdb0','#d2b896'], brief:['#d6e3d6','#c1d1c2'], cafe:['#c9a06a','#b58c58']};
+const FL = {qc:['#3a2f5a','#31274d'], ref:['#b8ab90','#a3977d'], photo:['#a3a9ba','#9097aa'], retouch:['#93a88f','#82977e'], web:['#bba9cc','#a998bb'], ad:['#cba9a2','#b99891'], brief:['#aba59c','#99938a'], cafe:['#b08a5c','#9c764a']};
 const SPOT = {qc:[[3,3],[4.7,2.3],[2.3,4.7],[4.5,4.5]], ref:[[2.6,1.3],[4.2,2.6],[3,3.8]], photo:[[3.2,1.2],[4.6,2.4],[3.2,3.6],[2.2,2.4]], retouch:[[2.6,1.6],[4.2,3]], web:[[1,2.4],[2.4,2.2],[3.8,2.4],[5.2,2.2],[1.8,4.3],[4.4,4.3]], ad:[[1.2,2.6],[2.8,2.4],[1.8,4.4],[3.6,4.2]], brief:[[1.5,3.8],[2.9,4.6]], cafe:[[2.2,2.5],[3.6,2.9]]};
 const TP = [['#174f3d','#2a7a4c','#4fae5a','#9be070'], ['#1e5c36','#35913f','#6cc24a','#b9ec74'], ['#154a48','#237066','#3fa487','#8fe0b0']];
 
@@ -607,6 +617,7 @@ function zone(i, j){
   if (j > 36.4 && j <= 37.4 && i > 9 && i < 34) return 0;
   if (i > 28.6 && i < 32.8 && j > 32 && j < 36.4) return 0;
   if (i > 12.2 && i < 14.4 && j > 16.8 && j < 19.8) return 0;
+  if (Math.hypot(i - 39.6, j - 22) < 3.2) return 0;
   if (i > -.6 && i < 8.9 && j > 34.6 && j < 44.6) return 0;
   if (i > 16.4 && i < 20.2 && j >= 41) return 0;
   for (const t of TOWERS) if (inR(i, j, t, .7)) return 0;
@@ -629,17 +640,18 @@ function forest(){
     else S(i + j + 1, () => r2 < .55 ? pine(x, y, .95 + r * .7, pal === PNK ? TP[0] : pal) : oak(x, y, .85 + r * .5, pal));
   }
 }
-const TW = [['#6fb3c4','#4a8ea3','#d6ecea','#c9f2f4','#9fd9e4'], ['#ddd4c2','#bcb29d','#efe9db','#7b9ab3','#5f7f99'], ['#cf9272','#ab7155','#ead9c8','#f8f0da','#e2d6b8'], ['#5d7c9a','#44617d','#a9bfd0','#a9dcff','#86bdea'], ['#f3f6f4','#d2dbd6','#ffffff','#7fcfc4','#5fb3a8']];
+const TW = [['#9590a8','#76718a','#c9c4d6','#ffd98a','#f0b85a'], ['#b0a690','#8f8672','#d9d0bc','#ffd98a','#e9a94a'], ['#8a8f9e','#6d7282','#bfc4d0','#ffe3a0','#f2c46e'], ['#a39cb4','#827b95','#d2cce0','#ffd98a','#f0b85a'], ['#9c9484','#7c7566','#cbc3b2','#ffe3a0','#f2c46e']];
 function tower(t, vines){
   const [i, j, w, h, H, st] = t, p = TW[st % 5], k = st % 4;
   box(i, j, w, h, 0, H, p[2], p[0], p[1]);
-  for (let z = 7; z < H - 6; z += 7){ for (let u = .22; u < w - .3; u += .5) wq([iso(i + u, j + h, z + 4), iso(i + u + .3, j + h, z + 4), iso(i + u + .3, j + h, z), iso(i + u, j + h, z)], rn() < .16 ? '#fff3b0' : p[3], 1); for (let u = .22; u < h - .3; u += .5) wq([iso(i + w, j + u, z + 4), iso(i + w, j + u + .3, z + 4), iso(i + w, j + u + .3, z), iso(i + w, j + u, z)], rn() < .16 ? '#ffe08a' : p[4], 1); }
+  for (let z = 9; z < H - 6; z += 13){ for (let u = .35; u < w - .3; u += .95) wq([iso(i + u, j + h, z + 4), iso(i + u + .3, j + h, z + 4), iso(i + u + .3, j + h, z), iso(i + u, j + h, z)], rn() < .16 ? '#fff3b0' : p[3], 1); for (let u = .35; u < h - .3; u += .95) wq([iso(i + w, j + u, z + 4), iso(i + w, j + u + .3, z + 4), iso(i + w, j + u + .3, z), iso(i + w, j + u, z)], rn() < .16 ? '#ffe08a' : p[4], 1); }
   fJ(i + w / 2 - .35, i + w / 2 + .35, j + h, 0, 6, '#3b4540'); il(iso(i, j + h, H), iso(i + w, j + h, H), '#ffffff'); il(iso(i + w, j, H), iso(i + w, j + h, H), '#ffffff');
   quad(i + .3, j + .3, w - .6, h - .6, tone(p[2], .88), H);
   if (k === 0 || vines) for (let n = 0; n < w * h * (vines ? .7 : .45); n++){ const q = iso(i + .5 + rn() * (w - 1), j + .5 + rn() * (h - 1), H); blob(Math.round(q[0]), Math.round(q[1]) - 2, 3 + (rn() * 3 | 0), TP[n % 3]); }
-  if (k === 1){ const q = iso(i + w / 2, j + h / 2, H); P(q[0], q[1] - 18, 1, 18, '#5d6b64'); P(q[0] - 1, q[1] - 20, 3, 2, '#e4523b'); }
-  if (k === 2) box(i + .6, j + .6, 1.2, 1.2, H, H + 8, '#c9d6cf', '#9aa8a0', '#7f938a');
-  if (k === 3 && !vines){ const q = iso(i + w / 2, j + h / 2, H).map(Math.round); ell(q[0], q[1], 10, 5, '#5d6b64'); ell(q[0], q[1], 8, 4, '#7c877f'); P(q[0] - 2, q[1] - 2, 1, 4, '#fff'); P(q[0] + 2, q[1] - 2, 1, 4, '#fff'); P(q[0] - 2, q[1], 5, 1, '#fff'); }
+  { const ap = iso(i + w / 2, j + h / 2, H + w * 15 + 10).map(Math.round), sl = ['#3b2f5c', '#4a3a78', '#2c2347', '#5a3f8c'][st % 4];
+    fillPoly([iso(i - .2, j + h + .2, H), iso(i + w + .2, j + h + .2, H), ap], sl); fillPoly([iso(i + w + .2, j - .2, H), iso(i + w + .2, j + h + .2, H), ap], tone(sl, .72));
+    il(iso(i - .2, j + h + .2, H), iso(i + w + .2, j + h + .2, H), '#d9b24a'); il(iso(i + w + .2, j - .2, H), iso(i + w + .2, j + h + .2, H), '#b38f30');
+    P(ap[0], ap[1] - 12, 1, 12, '#5d586e'); P(ap[0] + 1, ap[1] - 12, 7, 2, ['#7b4fd0', '#d9b24a', '#2f8f86', '#b54a5e'][st % 4]); P(ap[0] + 1, ap[1] - 10, 5, 2, ['#7b4fd0', '#d9b24a', '#2f8f86', '#b54a5e'][st % 4]); P(ap[0] - 1, ap[1] - 13, 3, 1, '#ffd95a'); }
   if (vines){
     for (let n = 0; n < w * 2.4; n++){ const q = iso(i + rn() * w, j + h, H), len = 8 + rn() * H * .5; for (let y = 0; y < len; y++) if (rn() > .22) P(q[0] + ((y >> 2) & 1), q[1] + y, 2, 1, y % 3 ? '#2f7d55' : '#49a873'); }
     for (let n = 0; n < h * 2.4; n++){ const q = iso(i + w, j + rn() * h, H), len = 8 + rn() * H * .5; for (let y = 0; y < len; y++) if (rn() > .22) P(q[0] - ((y >> 2) & 1), q[1] + y, 2, 1, y % 3 ? '#24633f' : '#3a8a4f'); }
@@ -671,7 +683,7 @@ function ground(){
   const stone = (i, j) => { const p = iso(i, j); ell(p[0] | 0, (p[1] | 0) + 1, 7, 3, '#a59c82'); ell(p[0] | 0, p[1] | 0, 7, 3, '#ddd5bd'); };
   SEG.forEach(([a, b]) => { const len = Math.hypot(b[0] - a[0], b[1] - a[1]); for (let d = 0; d <= len; d += .85){ const i = a[0] + (b[0] - a[0]) * d / len, j = a[1] + (b[1] - a[1]) * d / len; if (!inPlaza(i, j, .98)) stone(i + Math.sin(d * 2.1) * .12, j); } });
   Object.keys(RM).sort((a, b) => RM[a][0] + RM[a][1] - RM[b][0] - RM[b][1]).forEach(id => {
-    const [i0, j0, w, h] = RM[id], f = FL[id]; box(i0, j0, w, h, 0, FZ, f[0], '#7a4f2c', '#6b4426');
+    const [i0, j0, w, h] = RM[id], f = FL[id]; box(i0, j0, w, h, 0, FZ, f[0], '#6e6880', '#5d586e');
     for (let jj = j0 + .5; jj < j0 + h; jj += .5) il(iso(i0, jj, FZ), iso(i0 + w, jj, FZ), f[1]);
   });
   shift('photo'); quad(5.05, 16.9, 2.5, 2.8, '#f4f7f5', FZ); il(iso(7.55, 16.9, FZ), iso(7.55, 19.7, FZ), '#d5ddd9');
@@ -681,16 +693,16 @@ function ground(){
 }
 const FLW = ['#ff9ac4', '#ffd95a', '#ffffff', '#ff7a6b', '#b7a6ff'];
 function wallI(i, j, win){
-  fI(i, j, j + 1, FZ, FZ + WH, '#93633a'); for (let z = 6; z < WH; z += 6) il(iso(i, j, FZ + z), iso(i, j + 1, FZ + z), '#7a5030');
-  il(iso(i, j, FZ + WH), iso(i, j + 1, FZ + WH), '#e0b070'); il(iso(i, j, FZ + WH - 1), iso(i, j + 1, FZ + WH - 1), '#c9975a');
-  if (win){ fI(i, j + .14, j + .86, FZ + 9, FZ + 25, '#4a2f1a'); wq([iso(i, j + .2, FZ + 24), iso(i, j + .8, FZ + 24), iso(i, j + .8, FZ + 10), iso(i, j + .2, FZ + 10)], '#bfe9dc', 2); fI(i, j + .2, j + .8, FZ + 10, FZ + 15, '#7fc9a0'); const m = iso(i, j + .5, FZ + 10); P(m[0], m[1] - 14, 1, 14, '#ffffff'); il(iso(i, j + .2, FZ + 17), iso(i, j + .8, FZ + 17), '#ffffff'); il(iso(i, j + .16, FZ + 8), iso(i, j + .84, FZ + 8), '#6b4426'); for (const u of [.28, .5, .72]){ const q = iso(i, j + u, FZ + 9).map(Math.round); P(q[0] - 1, q[1], 2, 1, '#3f9446'); P(q[0] - 1, q[1] - 2, 2, 2, FLW[(i * 3 + j * 5 + u * 9 | 0) % 5]); } }
+  fI(i, j, j + 1, FZ, FZ + WH, '#8e889e'); for (let z = 6; z < WH; z += 6) il(iso(i, j, FZ + z), iso(i, j + 1, FZ + z), '#757087');
+  il(iso(i, j, FZ + WH), iso(i, j + 1, FZ + WH), '#d8d2e4'); il(iso(i, j, FZ + WH - 1), iso(i, j + 1, FZ + WH - 1), '#b3adc2');
+  if (win){ fI(i, j + .14, j + .86, FZ + 9, FZ + 25, '#3a3346'); wq([iso(i, j + .2, FZ + 24), iso(i, j + .8, FZ + 24), iso(i, j + .8, FZ + 10), iso(i, j + .2, FZ + 10)], '#ffe2a6', 2); fI(i, j + .2, j + .8, FZ + 10, FZ + 15, '#f2c46e'); const m = iso(i, j + .5, FZ + 10); P(m[0], m[1] - 14, 1, 14, '#ffffff'); il(iso(i, j + .2, FZ + 17), iso(i, j + .8, FZ + 17), '#ffffff'); il(iso(i, j + .16, FZ + 8), iso(i, j + .84, FZ + 8), '#6b4426'); for (const u of [.28, .5, .72]){ const q = iso(i, j + u, FZ + 9).map(Math.round); P(q[0] - 1, q[1], 2, 1, '#3f9446'); P(q[0] - 1, q[1] - 2, 2, 2, FLW[(i * 3 + j * 5 + u * 9 | 0) % 5]); } }
 }
 function wallJ(i, j, win){
-  fJ(i, i + 1, j, FZ, FZ + WH, '#a97443'); for (let z = 6; z < WH; z += 6) il(iso(i, j, FZ + z), iso(i + 1, j, FZ + z), '#8a5a34');
-  il(iso(i, j, FZ + WH), iso(i + 1, j, FZ + WH), '#e8bd7c'); il(iso(i, j, FZ + WH - 1), iso(i + 1, j, FZ + WH - 1), '#d1a264');
-  if (win){ fJ(i + .14, i + .86, j, FZ + 9, FZ + 25, '#4a2f1a'); wq([iso(i + .2, j, FZ + 24), iso(i + .8, j, FZ + 24), iso(i + .8, j, FZ + 10), iso(i + .2, j, FZ + 10)], '#cdf1e4', 2); fJ(i + .2, i + .8, j, FZ + 10, FZ + 15, '#8fd3ad'); const m = iso(i + .5, j, FZ + 10); P(m[0], m[1] - 14, 1, 14, '#ffffff'); il(iso(i + .2, j, FZ + 17), iso(i + .8, j, FZ + 17), '#ffffff'); il(iso(i + .16, j, FZ + 8), iso(i + .84, j, FZ + 8), '#6b4426'); for (const u of [.28, .5, .72]){ const q = iso(i + u, j, FZ + 9).map(Math.round); P(q[0] - 1, q[1], 2, 1, '#3f9446'); P(q[0] - 1, q[1] - 2, 2, 2, FLW[(i * 5 + j * 3 + u * 9 | 0) % 5]); } }
+  fJ(i, i + 1, j, FZ, FZ + WH, '#a6a0b6'); for (let z = 6; z < WH; z += 6) il(iso(i, j, FZ + z), iso(i + 1, j, FZ + z), '#8a849c');
+  il(iso(i, j, FZ + WH), iso(i + 1, j, FZ + WH), '#e2dcec'); il(iso(i, j, FZ + WH - 1), iso(i + 1, j, FZ + WH - 1), '#c4bed2');
+  if (win){ fJ(i + .14, i + .86, j, FZ + 9, FZ + 25, '#3a3346'); wq([iso(i + .2, j, FZ + 24), iso(i + .8, j, FZ + 24), iso(i + .8, j, FZ + 10), iso(i + .2, j, FZ + 10)], '#ffe8b3', 2); fJ(i + .2, i + .8, j, FZ + 10, FZ + 15, '#f2c46e'); const m = iso(i + .5, j, FZ + 10); P(m[0], m[1] - 14, 1, 14, '#ffffff'); il(iso(i + .2, j, FZ + 17), iso(i + .8, j, FZ + 17), '#ffffff'); il(iso(i + .16, j, FZ + 8), iso(i + .84, j, FZ + 8), '#6b4426'); for (const u of [.28, .5, .72]){ const q = iso(i + u, j, FZ + 9).map(Math.round); P(q[0] - 1, q[1], 2, 1, '#3f9446'); P(q[0] - 1, q[1] - 2, 2, 2, FLW[(i * 5 + j * 3 + u * 9 | 0) % 5]); } }
 }
-const ROOFC = {qc:'#e3a52f', ref:'#d9643a', photo:'#4f86d6', web:'#2aa39a', retouch:'#8468d8', ad:'#e0584f', brief:'#6f86a8', cafe:'#35b3a6'};
+const ROOFC = {qc:'#5b3f9c', ref:'#3d5a9a', photo:'#2f7680', web:'#6a46a8', retouch:'#3f7a52', ad:'#8a2f46', brief:'#7a5a2a', cafe:'#9a5a8a'};
 const RO = 1.3, RH = 17, EO = .35, SMOKE = [];
 function roofSeg(ax, a, b, s0, s1, zw, col, first, stripe){
   const pt = (t, s) => { const o = -RO + t * (RO + EO), z = zw + RH - t * (RH + 3); return ax === 'I' ? iso(a + o, s, z) : iso(s, b + o, z); };
@@ -738,7 +750,7 @@ function signBoard(){
   P(x0, y0, w, h, K); P(x0 + 1, y0 + 1, w - 2, h - 2, '#fff3b0'); P(x0 + 2, y0 + 2, w - 4, h - 4, '#8a5a34'); P(x0 + 2, y0 + 2, w - 4, 2, '#b9824a');
   for (let ly = y0 + 8; ly < y0 + h - 3; ly += 6) P(x0 + 2, ly, w - 4, 1, '#6e4526');
   const cx = x0 + 17, cy = y0 + 20; ell(cx, cy, 12, 12, K); ell(cx, cy, 11, 11, '#f6efdd'); spr(LEAF, cx - 4, cy - 6, {g: '#1f6a4c', G: '#2f9c68', d: K});
-  txt('VISUAL TEAM', x0 + 34, y0 + 9, '#3a2414', 2, 11); txt('VISUAL TEAM', x0 + 34, y0 + 7, '#fff6dc', 2, 11); txt('AI AGENT OFFICE', x0 + 35, y0 + 27, '#a9e6c0', 1);
+  txt('VISUAL TEAM', x0 + 34, y0 + 9, '#3a2414', 2, 11); txt('VISUAL TEAM', x0 + 34, y0 + 7, '#fff6dc', 2, 11); txt('MAGIC AI OFFICE', x0 + 35, y0 + 27, '#ffd95a', 1);
   vine(x0 + 6, y0 + h, 12); vine(x0 + w - 8, y0 + h, 16); blob(x0 + 4, y0 + 1, 6, TP[1]); blob(x0 + w - 5, y0 + 2, 7, TP[0]);
 }
 function treehouse(i, j){
@@ -775,12 +787,14 @@ function canteen(){
   const table = i => S(i + b + 3.6, () => { box(i - .35, b + 2.1, .25, 1.9, z, z + 4, '#c08a52', W, Wd); box(i, b + 2.1, .5, 1.9, z, z + 7, '#f0d9b0', '#b9824a', '#a8743f'); box(i + .65, b + 2.1, .25, 1.9, z, z + 4, '#c08a52', W, Wd);
     [2.45, 3.55].forEach(dj => { const p = iso(i + .25, b + dj, z + 7).map(Math.round); ell(p[0], p[1], 3, 1, '#ffffff'); P(p[0] - 1, p[1] - 1, 2, 1, '#c0562f'); }); });
   table(a + 2.6); table(a + 4.6);
+  const CND = []; for (let k = 0; k < 14; k++) CND.push([a + .9 + (k % 7) * .95, b + 1.5 + (k / 7 | 0) * 1.6 + (k & 1) * .3, 34 + (k * 7 % 9)]);
+  DYN.push(t => CND.forEach(([ci, cj, cz], k) => { const p = iso(ci, cj, z + cz + Math.round(Math.sin((t + k * 3) * .35) * 2)).map(Math.round); ell(p[0], p[1] - 1, 4, 3, 'rgba(255,214,120,.18)'); P(p[0], p[1], 2, 5, '#fff7e6'); P(p[0], p[1] + 4, 2, 1, '#d9cfb8'); P(p[0] + ((t + k) & 1 ? 1 : 0), p[1] - 2, 1, 2, '#ffd95a'); P(p[0], p[1] - 1, 2, 1, '#ff9a3c'); }));
   /* snack cart */
   S(a + b + 4.1, () => { box(a + .2, b + 3.5, .8, .7, z, z + 9, '#ffe07a', '#e9a820', '#c98d10'); ['#f7b6cf', '#8fe0b5', '#ffffff', '#c0562f'].forEach((c, k) => { const p = iso(a + .35 + (k & 1) * .35, b + 3.65 + (k >> 1) * .3, z + 9).map(Math.round); P(p[0] - 1, p[1] - 2, 3, 2, c); });
     const u = iso(a + .6, b + 3.85, z + 26).map(Math.round); P(u[0], u[1], 1, 17, '#5a3a22'); ell(u[0], u[1], 11, 4, '#ff7a6b'); for (let k = -10; k <= 10; k += 5) P(u[0] + k, u[1] - 1, 2, 4, '#ffffff'); });
   /* bunting between posts */
   S(a + b + h + w, () => { const lines = [[[a + .1, b + .1], [a + w - .1, b + .1]], [[a + .1, b + .1], [a + .1, b + h - .1]], [[a + w - .1, b + .1], [a + w - .1, b + h - .1]], [[a + .1, b + h - .1], [a + w - .1, b + h - .1]]];
-    lines.forEach(([p0, p1], n) => { for (let k = 0; k <= 24; k++){ const t = k / 24, i = p0[0] + (p1[0] - p0[0]) * t, j = p0[1] + (p1[1] - p0[1]) * t, q = iso(i, j, z + 35 - Math.sin(Math.PI * t) * 6).map(Math.round); P(q[0], q[1], 1, 1, '#5a3a22'); if (k % 3 === 1){ const c = ['#ffd95a', '#e4523b', '#55c58a', '#8fd3ff'][(k + n) % 4]; P(q[0] - 1, q[1] + 1, 3, 1, c); P(q[0], q[1] + 2, 1, 2, c); } } }); });
+    lines.forEach(([p0, p1], n) => { for (let k = 0; k <= 24; k++){ const t = k / 24, i = p0[0] + (p1[0] - p0[0]) * t, j = p0[1] + (p1[1] - p0[1]) * t, q = iso(i, j, z + 35 - Math.sin(Math.PI * t) * 6).map(Math.round); P(q[0], q[1], 1, 1, '#5a3a22'); if (k % 3 === 1){ const c = ['#ffd95a', '#7b4fd0', '#2f8f86', '#b54a5e'][(k + n) % 4]; P(q[0] - 1, q[1] + 1, 3, 1, c); P(q[0], q[1] + 2, 1, 2, c); } } }); });
 }
 function cliff(){
   box(-4, 24.4, 4.8, 2.2, 0, 60, '#a6b0a7', '#869188', '#727c75'); box(-4, 26.3, 6, 4, 0, 44, '#9aa59c', '#7c877f', '#69736c'); box(-4, 30.1, 5.2, 2.6, 0, 32, '#9aa59c', '#7c877f', '#69736c');
@@ -799,7 +813,7 @@ function buildWorld(){
   sd = 11; Q = []; FIG = []; DYN = []; WINS = []; LAMPS = []; REC = true; unshift();
   setupCity();
   BACK.forEach((o, k) => sideIsland(o, k));
-  for (let k = 0; k < 9; k++) cloudB(120 + k * 200 + (rn() * 60 | 0), 300 + (rn() * 380 | 0), .9 + rn(), '#ffffff', '#dcecf2');
+  for (let k = 0; k < 9; k++) cloudB(120 + k * 200 + (rn() * 60 | 0), 300 + (rn() * 380 | 0), .9 + rn(), '#fff1f6', '#ead8f2');
   rope([255, 530], [156, 478]); rope([1505, 520], [1622, 468]);
   ground(); forest();
   S(18.25 + 48.4, () => { box(17.4, 46.6, 1.7, 2.6, 0, 4, '#d2a870', '#8a5a34', '#7a4f2c'); for (let j = 46.9; j < 49.2; j += .3) il(iso(17.4, j, 4), iso(19.1, j, 4), '#b08a55'); lampAt(17.5, 49, 4); lampAt(19, 49, 4); });
@@ -813,7 +827,7 @@ function buildWorld(){
     const [a, b, w, h] = RM[id], nw = NOWIN[id], c = ROOMS.find(r => r.id === id).c, rc = [tone(c, .92), tone(c, .7), tone(c, .58)];
     for (let j = 0; j < h; j++) S(a + b + j + .01, () => wallI(a, b + j, !nw.I.includes(j)));
     for (let i = 0; i < w; i++) S(a + i + b + .01, () => wallJ(a + i, b, !nw.J.includes(i)));
-    S(a + b + .02, () => { const p = iso(a, b, FZ); P(p[0] - 1, p[1] - WH - 2, 3, WH + 2, '#6b4426'); });
+    S(a + b + .02, () => { const p = iso(a, b, FZ); P(p[0] - 1, p[1] - WH - 2, 3, WH + 2, '#5d586e'); });
     roof(id, FZ + WH, false);
     const d = DOOR[id];
     if (d !== 'j') for (let i = a; i < a + w - (d === 'c' ? 1 : 0); i++) S(i + b + h + .5, () => plantJ(i, b + h));
@@ -877,6 +891,17 @@ function buildWorld(){
     box(12.5, 22.9, .4, 1.5, 0, 4, '#d9a868', '#8a5a34', '#7a4f2c'); box(13.4, 24.6, 1.5, .4, 0, 4, '#d9a868', '#8a5a34', '#7a4f2c'); });
   DYN.push(t => { P(fp[0] - 2, fp[1] - 6 - (t & 1), 4, 5, '#ff9a3c'); P(fp[0] - 1, fp[1] - 8 - (t % 3), 2, 5, '#ffd95a'); P(fp[0] + (t & 1 ? 2 : -3), fp[1] - 4, 1, 2, '#ff9a3c'); for (let k = 0; k < 3; k++) P(fp[0] + ((t + k) % 3) - 1, fp[1] - 13 - ((t * 2 + k * 5) % 14), 1, 1, 'rgba(255,255,255,.55)'); });
   S(65.5, () => treehouse(35, 28.5));
+  const ORB = [[28.9, 32.3], [32.4, 32.3], [28.9, 36.1], [32.4, 36.1]];
+  ORB.forEach(([i, j]) => S(i + j + .2, () => { const p = iso(i, j).map(Math.round); P(p[0] - 1, p[1] - 44, 2, 44, '#5d586e'); P(p[0] - 1, p[1] - 44, 1, 44, '#8a849c'); P(p[0] - 3, p[1] - 2, 6, 2, '#5d586e'); }));
+  DYN.push(t => ORB.forEach(([i, j], k) => { const p = iso(i, j).map(Math.round), y = p[1] - 50 + ((t + k * 2) % 8 < 4 ? 0 : -1); ell(p[0], y, 7, 6, 'rgba(255,220,120,.18)'); ell(p[0], y, 4, 4, '#ffd95a'); ell(p[0] - 1, y - 1, 2, 2, '#fff7d0'); if ((t + k) % 5 === 0) P(p[0] + 5, y - 6, 1, 1, '#ffffff'); }));
+  const MT = iso(39.5, 20.5).map(Math.round), MP = [['#24183a', '#3a2858', '#5a4580', '#8f7fb8'], ['#1f2a2a', '#2f4a3f', '#4a6a55', '#7fa88a']];
+  S(39.5 + 20.5, () => { const x = MT[0], y = MT[1]; ell(x, y, 16, 5, '#2f4a3a'); for (let k = -1; k <= 1; k += 2){ line(x, y - 4, x + k * 12, y + 2, '#3a2a20'); line(x, y - 6, x + k * 9, y + 1, '#4a3628'); }
+    fillPoly([[x - 7, y], [x + 7, y], [x + 4, y - 40], [x - 5, y - 40]], '#3a2a20'); fillPoly([[x - 6, y], [x - 2, y], [x - 3, y - 40], [x - 5, y - 40]], '#4f3a2a'); line(x - 3, y - 12, x + 4, y - 22, '#2a1d16');
+    line(x - 2, y - 38, x - 18, y - 52, '#3a2a20'); line(x + 3, y - 38, x + 17, y - 50, '#3a2a20'); line(x - 2, y - 39, x - 17, y - 53, '#3a2a20');
+    blob(x - 16, y - 54, 12, MP[0]); blob(x + 15, y - 52, 11, MP[0]); blob(x, y - 62, 15, MP[0]); blob(x - 6, y - 46, 9, MP[1]); });
+  DYN.push(t => { const x = MT[0], y = MT[1], o = (t % 10) < 3 ? 3 : (t % 10) < 5 ? 1 : 0; P(x - 4, y - 31, 3, 2, '#ffd95a'); P(x + 2, y - 31, 3, 2, '#ffd95a'); if (t % 13 === 0){ P(x - 4, y - 31, 3, 2, '#3a2a20'); P(x + 2, y - 31, 3, 2, '#3a2a20'); }
+    P(x - 4, y - 26, 8, 2 + o, '#140c10'); for (let q = -3; q < 4; q += 2){ P(x + q, y - 26, 1, 1, '#f3ead6'); P(x + q, y - 25 + o, 1, 1, '#f3ead6'); }
+    const sw = Math.round(Math.sin(t * .45) * 4); line(x + 5, y - 18, x + 16, y - 16 + sw, '#3a2a20'); line(x + 16, y - 16 + sw, x + 21, y - 21 + sw, '#3a2a20'); P(x + 21, y - 22 + sw, 2, 2, '#4a6a55'); });
   canteen();
   S(13.3 + 18.3 + .5, () => { const pz = (i, j) => { const p = iso(i, j).map(Math.round); P(p[0] - 1, p[1] - 22, 2, 22, '#6b4a2e'); P(p[0] - 1, p[1] - 22, 1, 22, '#8a5a34'); }; pz(13.3, 17.6); pz(13.3, 19.0);
     fI(13.3, 17.45, 19.15, 8, 22, '#8a5a34'); fI(13.3, 17.55, 19.05, 9, 21, '#d9b07a');
@@ -894,9 +919,9 @@ function buildWorld(){
   DYN.push(t => SMOKE.forEach(([sx, sy], n) => { for (let k = 0; k < 4; k++){ const a = (t + k * 6 + n * 3) % 24, r = 2 + (a >> 3); ell(sx + Math.round(Math.sin((a + n) * .5) * 2) + (a >> 2), sy - a, r, r, NIGHT ? 'rgba(150,160,200,.35)' : 'rgba(255,255,255,.6)'); } }));
   Q.sort((a, b) => a[0] - b[0]).forEach(q => q[1]());
   FRONT.forEach((o, k) => sideIsland(o, k + 9));
-  for (let k = 0; k < 16; k++) cloudB(k * 118 + (rn() * 50 | 0), 1040 + (rn() * 34 | 0), 1.4 + rn() * 1.2, '#ffffff', '#dcecf2');
+  for (let k = 0; k < 16; k++) cloudB(k * 118 + (rn() * 50 | 0), 1040 + (rn() * 34 | 0), 1.4 + rn() * 1.2, '#fff1f6', '#ead8f2');
   const dc = []; for (let k = 0; k < 6; k++) dc.push([rn() * CW, k & 1 ? 90 + rn() * 130 : 860 + rn() * 150, .3 + rn() * .5, .7 + rn() * .8]);
-  DYN.push(t => dc.forEach(c => cloudB(((c[0] + t * c[2]) % (CW + 240) - 120) | 0, c[1] | 0, c[3], NIGHT ? '#34447f' : '#ffffff', NIGHT ? '#28366c' : '#dbeaf8')));
+  DYN.push(t => dc.forEach(c => cloudB(((c[0] + t * c[2]) % (CW + 240) - 120) | 0, c[1] | 0, c[3], NIGHT ? '#3a2f7f' : '#fff1f6', NIGHT ? '#2a2066' : '#ead8f2')));
   const tw = []; for (let k = 0; k < 60; k++) tw.push([rn() * CW | 0, rn() * 400 | 0]);
   DYN.push(t => { if (NIGHT) tw.forEach((p, k) => { if ((t + k) % 6 < 2){ P(p[0] - 1, p[1], 3, 1, '#ffffff'); P(p[0], p[1] - 1, 1, 3, '#ffffff'); } }); });
 }
@@ -937,12 +962,16 @@ Object.assign(ACT, {
   ball: {t:'เตะบอลเล่น', ic:'⚽', loc:'field', pose:'ball'}, kite: {t:'เล่นว่าว', ic:'🪁', loc:'field', pose:'kite'},
   guitar: {t:'เล่นกีตาร์รอบกองไฟ', ic:'🎸', loc:'camp', pose:'guitarSit'}, music: {t:'ฟังเพลงชิล ๆ', ic:'🎧', loc:'bench', pose:'musicSit'},
   jog: {t:'วิ่งรอบลาน', ic:'🏃', loc:'garden', pose:null, run:1}, butterfly: {t:'ไล่จับผีเสื้อ', ic:'🦋', loc:'garden', pose:'net'},
-  serve: {t:'ตักอาหารให้ทีม', ic:'👨‍🍳', loc:'canteen', pose:'grill'}
+  serve: {t:'ตักอาหารให้ทีม', ic:'👨‍🍳', loc:'canteen', pose:'grill'},
+  potion: {t:'ปรุงยาในหม้อ', ic:'⚗️', loc:'lawn', pose:'potion'}, broom: {t:'ขี่ไม้กวาดรอบสนาม', ic:'🧹', loc:'garden', pose:null, run:1, fly:14},
+  library: {t:'อ่านคัมภีร์ในห้องสมุด', ic:'📜', loc:'ref', pose:'tome'}, owl: {t:'ส่งจดหมายทางนกฮูก', ic:'🦉', loc:'view', pose:'owl'},
+  chess: {t:'เล่นหมากรุกเวทมนตร์', ic:'♟️', loc:'bench', pose:'chess'}, flycar: {t:'ขับรถบินได้', ic:'🚗', loc:'garden', pose:null, run:1, fly:36},
+  mtree: {t:'นั่งเล่นใต้ต้นไม้กินคน', ic:'🌳', loc:'shade', pose:'sit'}
 });
-Object.assign(PLACE, {cat:'ข้างลานกลาง (แมว)', bunny:'สนามหญ้า (กระต่าย)', pond:'ริมบ่อปลา', flower:'แปลงดอกไม้', view:'จุดชมวิวน้ำตก', bridge:'สะพานไม้', shade:'ใต้ต้นไม้ใหญ่', field:'สนามหญ้าโล่ง'});
-const SITS = new Set(['sit', 'sitEat', 'chatSit', 'readSit', 'yoga', 'guitarSit', 'musicSit', 'nap']);
+Object.assign(PLACE, {cat:'ข้างลานกลาง (แมว)', bunny:'สนามหญ้า (กระต่าย)', pond:'ริมบ่อปลา', flower:'แปลงดอกไม้', view:'จุดชมวิวน้ำตก', bridge:'สะพานไม้', shade:'ใต้ต้นไม้กินคน', field:'สนามหญ้าโล่ง'});
+const SITS = new Set(['sit', 'sitEat', 'chatSit', 'readSit', 'yoga', 'guitarSit', 'musicSit', 'nap', 'chess', 'tome']);
 function poolOf(id, ai){
-  const p = {work: ai ? 3 : 2.5, coffee: 1.5, walk: 2, jog: 1, sit: 1.2, stretch: 1, fish: 1, chat: 1, cat: 1, bunny: 1, feedfish: 1, water: 1, flower: 1, photo: 1, tea: 1, bridge: 1, read: 1, nap: .6, yoga: 1, ball: 1, kite: 1, guitar: .7, music: 1, butterfly: 1};
+  const p = {work: ai ? 3 : 2.5, coffee: 1.5, walk: 2, jog: 1, sit: 1.2, stretch: 1, fish: 1, chat: 1, cat: 1, bunny: 1, feedfish: 1, water: 1, flower: 1, photo: 1, tea: 1, bridge: 1, read: 1, nap: .6, yoga: 1, ball: 1, kite: 1, guitar: .7, music: 1, butterfly: 1, potion: 1.6, broom: 1.6, library: 1.3, owl: 1.3, chess: 1.3, flycar: 1.2, mtree: 1.3};
   if (!ai){ p.snack = 1; p.selfie = 1; }
   if (id === 'puff' || id === 'bill') p.fish = 3;
   if (id === 'boo') p.climb = 3;
@@ -999,13 +1028,13 @@ Object.assign(LSPOT, {
   cat: [[20.5, 20.1], [21.8, 21.1], [20.6, 21.3]], bunny: [[16.1, 25.8], [31.2, 25.8], [9.9, 22.0], [30.4, 37.0]],
   pond: [[8.3, 36.6], [10.4, 36.95], [9.3, 36.7]], flower: [[12.6, 18.6], [23.9, 17.0], [11.4, 20.4], [13.7, 13.2], [22.5, 12.7]],
   view: [[35.4, 36.95], [36.5, 37.0], [34.3, 36.95]], bridge: [[17.75, 38.7, 5], [18.85, 39.6, 5], [17.75, 39.9, 5]],
-  shade: [[33.5, 30.7], [32.7, 30.0], [34.6, 31.2]], field: [[29.6, 33.2], [31.4, 33.6], [30.2, 35.2], [31.8, 35.4]]
+  shade: [[38.7, 21.8], [40.3, 21.9], [38.1, 20.9]], field: [[29.6, 33.2], [31.4, 33.6], [30.2, 35.2], [31.8, 35.4]]
 });
 LSPOT.canteen.serve = [CS(3.4, .08)];
 const RING = (() => { const out = []; for (let k = 0; k < 12; k++){ const a = k / 12 * 6.2832, u = .5 + 3.9 * Math.cos(a), v = 35.5 + 4.1 * Math.sin(a); out.push([(u + v) / 2, (v - u) / 2]); } return out; })();
 const ROUTE = {qc: [GOAL.qc], web: [GOAL.web], ad: [GOAL.ad], brief: [[29.5, 22.6], GOAL.brief], ref: [GOAL.ref], photo: [GOAL.photo], retouch: [GOAL.retouch], cafe: [GOAL.cafe],
   canteen: [[18.25, 22.5], [18.25, 35.1], [19.9, 35.2]], river: [[18.25, 22.5], [18.25, 36.95]], tree: [[30.6, 25.2], [37.15, 29.0, 0], [36.6, 28.95, 30]], garden: [], bench: [], lawn: [], camp: [[15.8, 22.4]],
-  cat: [], bunny: [], flower: [], field: [[30.6, 25.2], [31, 32]], pond: [[18.25, 22.5], [18.25, 36.95], [11, 36.95]], view: [[18.25, 22.5], [18.25, 36.95]], bridge: [[18.25, 22.5], [18.25, 37.4]], shade: [[30.6, 25.2]]};
+  cat: [], bunny: [], flower: [], field: [[30.6, 25.2], [31, 32]], pond: [[18.25, 22.5], [18.25, 36.95], [11, 36.95]], view: [[18.25, 22.5], [18.25, 36.95]], bridge: [[18.25, 22.5], [18.25, 37.4]], shade: [[29.5, 22.6], [29.8, 23.8], [37.6, 23.6]]};
 const wp = q => ptOf(q[0], q[1], q[2] || 0);
 const MOVERS = () => [...MEMBERS.map(m => ({id: m.id, m})), ...AGENTS.map(a => ({id: 'ag:' + a.en, a}))];
 const LOWZ = {bench: 1, camp: 1, bridge: 1};
@@ -1048,9 +1077,9 @@ function wander(){
   let any = 0;
   Object.values(FM).forEach(f => {
     if (f.gone || f.path) return;
-    if (f.act === 'walk' || f.act === 'jog' || f.act === 'butterfly'){
-      if (Math.random() > (f.act === 'jog' ? .9 : .4)) return;
-      f.ri = (f.ri + (f.act === 'jog' ? 1 : Math.random() < .5 ? 1 : RING.length - 1)) % RING.length; if (WHERE[f.id]) WHERE[f.id].ri = f.ri;
+    if (f.act === 'walk' || f.run || f.act === 'butterfly'){
+      if (Math.random() > (f.run ? .95 : .4)) return;
+      f.ri = (f.ri + (f.run ? 1 : Math.random() < .5 ? 1 : RING.length - 1)) % RING.length; if (WHERE[f.id]) WHERE[f.id].ri = f.ri;
       const e = wp(RING[f.ri]); f.ex = e[0]; f.ey = e[1]; f.path = [e]; any = 1;
     } else if (!f.act && RM[f.room] && Math.random() < .08){
       const [i0, j0, w, h] = RM[f.room], sp = [...SPOT[f.room], ...SPOTX(w, h)][Math.random() * (SPOT[f.room].length + 8) | 0], e = ptOf(i0 + sp[0], j0 + sp[1], FZ);
@@ -1075,14 +1104,20 @@ function walkStep(){
 const cv = $('cv'), ov = $('ov'); let worldD = null, worldN = null, skyD = null, skyN = null, tick = 0, todMode = 'auto';
 const mk = () => { const c = document.createElement('canvas'); c.width = CW; c.height = CH; return c; };
 const autoNight = () => { const h = +new Date().toLocaleString('en-GB', {timeZone: 'Asia/Bangkok', hour: '2-digit', hourCycle: 'h23'}); return h >= 14 || h < 6; };
+const FLY = f => { const A = ACT[f.act]; return A && A.fly ? A.fly + Math.round(Math.sin((tick + f.id.length * 3) * .4) * 2) : 0; };
+function ride(act, x, y, t, c){
+  if (act === 'broom'){ line(x - 5, y + 13, x + 17, y + 11, '#8a5a34'); line(x - 5, y + 14, x + 17, y + 12, '#6b4a2e'); fillPoly([[x - 5, y + 12], [x - 13, y + 9], [x - 14, y + 17], [x - 5, y + 15]], '#d9b26a'); P(x - 6, y + 12, 2, 4, '#7a2f4a'); for (let k = 0; k < 4; k++) P(x - 16 - k * 4 - (t % 3), y + 12 + ((t + k) % 3), 1, 1, ['#ffd95a', '#fff3b0', '#b7a6ff', '#ffffff'][k]); return; }
+  if (act === 'flycar'){ const b = c ? tone(c, .9) : '#8a5cd6'; P(x - 7, y + 10, 26, 6, K); P(x - 6, y + 10, 24, 5, b); P(x - 6, y + 10, 24, 1, tone(b, 1.3)); P(x - 2, y + 7, 14, 3, K); P(x - 1, y + 8, 12, 2, 'rgba(190,230,255,.55)'); P(x + 17, y + 11, 2, 2, '#fff3b0'); P(x - 7, y + 11, 1, 2, '#e4523b');
+    ell(x - 1, y + 16, 3, 2, '#1b1b22'); ell(x + 13, y + 16, 3, 2, '#1b1b22'); for (let k = 0; k < 5; k++) P(x - 10 - k * 4 - (t % 3), y + 13 + ((t + k) & 1), 2, 1, ['#ff8ad0', '#ffd95a', '#8eeaf0', '#b7a6ff', '#ffffff'][k]); }
+}
 function frame(){
   if (!worldD) return;
   g = cv.getContext('2d'); g.globalAlpha = 1; g.drawImage(NIGHT ? skyN : skyD, 0, 0); g.drawImage(NIGHT ? worldN : worldD, 0, 0);
   DYN.forEach(f => f(tick));
   FIG.forEach((f, i) => {
     P(Math.round(f.x) - 5, Math.round(f.y) - 1, 10, 2, 'rgba(0,0,0,.22)'); P(Math.round(f.x) - 3, Math.round(f.y) + 1, 6, 1, 'rgba(0,0,0,.22)');
-    if (f.a){ const pz = f.path ? null : f.pose, sit = SITS.has(pz) ? 2 : 0, by = f.path ? ((f.step >> 1) & 1) : ((tick + i * 5) % 16 === 0 ? 1 : 0); npc(f.a, Math.round(f.x) - 6, Math.round(f.y) - 16 - by + sit, (tick + i * 3) % 9 === 0 || pz === 'nap'); if (pz) poseFX(pz, Math.round(f.x) - 6, Math.round(f.y) - 16 + sit, f.a.c, f.a.en); const my = f.y - 27 - (((tick + i) & 3) < 2 ? 0 : 1); P(f.x - 1, my - 1, 2, 6, K); P(f.x - 3, my + 1, 6, 2, K); P(f.x - 2, my, 4, 4, K); P(f.x - 1, my, 2, 4, f.a.c); P(f.x - 2, my + 1, 4, 2, f.a.c); P(f.x - 1, my + 1, 1, 1, '#ffffff'); }
-    else { const wx = Math.round(f.x), wy = Math.round(f.y) - (f.path && (f.step >> 1) & 1 ? 1 : 0), pose = f.path ? (f.act === 'climb' && f.path.length <= 2 ? 'climb' : null) : f.pose; human(f.m, wx - 6, wy - 16, (tick + i * 3) % 10 === 0 || pose === 'nap', pose); }
+    if (f.a){ const fl = FLY(f), pz = f.path ? null : f.pose, sit = SITS.has(pz) ? 2 : 0, by = fl + (f.path ? ((f.step >> 1) & 1) : ((tick + i * 5) % 16 === 0 ? 1 : 0)); if (fl && f.act === 'broom') ride('broom', Math.round(f.x) - 6, Math.round(f.y) - 16 - by + 4, tick); npc(f.a, Math.round(f.x) - 6, Math.round(f.y) - 16 - by + sit, (tick + i * 3) % 9 === 0 || pz === 'nap'); if (fl && f.act === 'flycar') ride('flycar', Math.round(f.x) - 6, Math.round(f.y) - 16 - by + 4, tick, f.a.c); if (pz) poseFX(pz, Math.round(f.x) - 6, Math.round(f.y) - 16 + sit, f.a.c, f.a.en); const my = f.y - 27 - fl - (((tick + i) & 3) < 2 ? 0 : 1); P(f.x - 1, my - 1, 2, 6, K); P(f.x - 3, my + 1, 6, 2, K); P(f.x - 2, my, 4, 4, K); P(f.x - 1, my, 2, 4, f.a.c); P(f.x - 2, my + 1, 4, 2, f.a.c); P(f.x - 1, my + 1, 1, 1, '#ffffff'); }
+    else { const fl = FLY(f), wx = Math.round(f.x), wy = Math.round(f.y) - fl - (f.path && (f.step >> 1) & 1 ? 1 : 0), pose = f.path ? (f.act === 'climb' && f.path.length <= 2 ? 'climb' : null) : f.pose; if (fl && f.act === 'broom') ride('broom', wx - 6, wy - 16 + 2, tick); human(f.m, wx - 6, wy - 16, (tick + i * 3) % 10 === 0 || pose === 'nap', pose); if (fl && f.act === 'flycar') ride('flycar', wx - 6, wy - 16 + 2, tick, f.m.L.shirt); }
   });
 }
 function setTod(){ NIGHT = todMode === 'auto' ? autoNight() : todMode === 'night'; $('vp').classList.toggle('night', NIGHT); $('tod').textContent = NIGHT ? '☀' : '☾'; $('tod').setAttribute('aria-label', NIGHT ? 'ดูโหมดกลางวัน' : 'ดูโหมดกลางคืน'); frame(); }
@@ -1210,7 +1245,7 @@ let editing = null;
 function memberSheet(id){
   const m = MEMBERS.find(x=>x.id===id); editing = {id, s: stOf(id)};
   const cur = STATE.status[id] || {};
-  openSheet(`<div style="display:flex;gap:14px;align-items:center"><img class="px" src="${mURL(m)}" alt="" style="width:72px;height:96px"><div><h2>${esc(m.nick)}</h2><p class="sub" style="margin:4px 0 0">${esc(m.name)} · ${esc(m.brand)}</p></div></div>
+  openSheet(`<div style="display:flex;gap:14px;align-items:center"><img class="px" src="${mURL(m)}" alt="" style="width:72px;height:120px"><div><h2>${esc(m.nick)}</h2><p class="sub" style="margin:4px 0 0">${esc(m.name)} · ${esc(m.brand)}</p></div></div>
   <p style="font-size:15px">${esc(m.role)}</p>
   ${(() => { const w = WHERE[id] || whereNow(m), r = w.room && ROOMS.find(x => x.id === w.room); return `<p class="note" style="margin-top:0">ตอนนี้อยู่: <b>${esc(r ? r.name : (PLACE[w.room] || 'ไม่อยู่ในออฟฟิศ'))}</b> · ${esc(w.why)}</p>`; })()}
   ${cur.day === today && Array.isArray(cur.plan) && cur.plan.length ? `<b>แผนวันนี้จาก Daily Task</b><ul class="plan">${cur.plan.slice(0, 14).map(p => `<li><span>${esc(p && p.t)}</span>${esc(p && p.w)}</li>`).join('')}</ul>` : ''}
